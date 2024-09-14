@@ -1,0 +1,30 @@
+package com.sise.biblioteca.entities;
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import  lombok.Data;
+import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
+
+@Data
+@Entity
+@Table(name = "subgeneros")
+public class SubGenero {
+
+    @Id
+    @Column(name = "idsubgenero")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idSubgenro;
+
+    @Column(name = "nombre")
+    private  String nombre;
+
+    @Column(name = "estado",insertable = false,updatable = false)
+    @JsonIgnore
+    private  byte estado;
+
+
+
+
+
+}

@@ -36,7 +36,7 @@ public class AutorController {
   }
 
   @PostMapping("")
-  public ResponseEntity<BaseResponse> add(@RequestBody Autor autor) {
+  public ResponseEntity<BaseResponse> addAutor(@RequestBody Autor autor) {
     try {
       autorService.add(autor);
       return new ResponseEntity<BaseResponse>(BaseResponse.success(autor), HttpStatus.OK);
@@ -46,7 +46,7 @@ public class AutorController {
   }
 
   @PutMapping("/{idAutor}")
-  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idAutor, @RequestBody Autor autor) {
+  public ResponseEntity<BaseResponse> editAutor(@PathVariable Integer idAutor, @RequestBody Autor autor) {
     try {
       if (autorService.getById(idAutor) == null)
         return new ResponseEntity<BaseResponse>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
@@ -59,7 +59,7 @@ public class AutorController {
   }
 
   @PatchMapping("/{idAutor}")
-  public ResponseEntity<BaseResponse> remove(@PathVariable Integer idAutor) {
+  public ResponseEntity<BaseResponse> removeAutor(@PathVariable Integer idAutor) {
     try {
       if (autorService.getById(idAutor) == null)
         return new ResponseEntity<BaseResponse>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);

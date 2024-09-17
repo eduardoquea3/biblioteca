@@ -11,38 +11,32 @@ import java.util.List;
 @Service
 public class ILibrosServiceImpl implements ILibrosService {
 
-    @Autowired
-    private final ILibrosRepository librosRepository;
+  @Autowired
+  private ILibrosRepository libroRepository;
 
+  @Override
+  public List<Libros> getAll() {
+    return libroRepository.findAll();
+  }
 
-    public ILibrosServiceImpl(ILibrosRepository librosRepository) {
-        this.librosRepository = librosRepository;
-    }
-    @Override
-    public List<Libros>getAll(){
-        return librosRepository.findAll();
-     }
+  @Override
+  public Libros getById(Integer idLibros) {
+    return null;
+  }
 
-     @Override
-     public Libros getById(Integer idLibros){
-        return null;
-    }
+  @Override
+  public Libros add(Libros libros) {
+    return null;
+  }
 
-     @Override
-     public Libros add(Libros libros){
-        return null;
-     }
+  @Override
+  public Libros edit(Integer idLibros) {
+    return null;
+  }
 
-     @Override
-     public Libros edit(Integer idLibros){
-        return null;
-     }
-     @Override
-     public void remove(Integer idLibros){
+  @Override
+  public void remove(Integer idLibros) {
 
-     }
-
-
-
+  }
 
 }

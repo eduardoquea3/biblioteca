@@ -11,34 +11,33 @@ import java.util.List;
 @Service
 public class IIdiomaServiceImpl implements IIdiomaService {
 
-    @Autowired
-    private  final IIdiomaRepository iIdiomaRepository;
+  @Autowired
+  private IIdiomaRepository idiomaRepository;
 
-    public IIdiomaServiceImpl(IIdiomaRepository iIdiomaRepository) {
-        this.iIdiomaRepository = iIdiomaRepository;
-    }
+  @Override
+  public List<Idioma> getAll() {
+    return null;
+  }
 
-    @Override
-    public List<Idioma>getAll(){
-        return  null;
-    }
-    @Override
-    public Idioma getById(Integer idIdioma){
-        return  null;
-    }
-    @Override
-    public Idioma add(Idioma idioma){
-        return  null;
+  @Override
+  public Idioma getById(Integer idIdioma) {
+    return null;
+  }
 
-    }
-    @Override
-    public Idioma edit(Integer idIditorial){
-        return  null;
-    }
-    @Override
-    public void remove(Integer idIdioma){
+  @Override
+  public Idioma add(Idioma idioma) {
+    return null;
 
-    }
+  }
 
+  @Override
+  public Idioma edit(Integer idIditorial) {
+    return null;
+  }
+
+  @Override
+  public void remove(Integer idIdioma) {
+
+  }
 
 }

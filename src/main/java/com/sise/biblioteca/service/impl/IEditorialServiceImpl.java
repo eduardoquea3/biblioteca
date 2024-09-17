@@ -11,33 +11,33 @@ import java.util.List;
 @Service
 public class IEditorialServiceImpl implements IEditorialService {
 
-    @Autowired
-    private final IEditorialRepository iEditorialRepository;
+  @Autowired
+  private IEditorialRepository editorialRepository;
 
-    public IEditorialServiceImpl(IEditorialRepository iEditorialRepository) {
-        this.iEditorialRepository = iEditorialRepository;
-    }
+  @Override
+  public List<Editorial> getAll() {
+    return null;
+  }
 
-    @Override
-    public List<Editorial>getAll(){
-        return  null;
-    }
-    @Override
-    public Editorial getById(Integer idEditorial){
-        return  null;
+  @Override
+  public Editorial getById(Integer idEditorial) {
+    return null;
 
-    }
-    @Override
-    public Editorial add(Editorial editorial){
-        return null;
-    }
-    @Override
-    public Editorial edit(Integer IdEditorial){
-        return  null;
-    }
+  }
 
-    @Override
-    public void remove(Integer IdEditorial){
+  @Override
+  public Editorial add(Editorial editorial) {
+    return null;
+  }
 
-    }
+  @Override
+  public Editorial edit(Integer IdEditorial) {
+    return null;
+  }
+
+  @Override
+  public void remove(Integer IdEditorial) {
+
+  }
+
 }

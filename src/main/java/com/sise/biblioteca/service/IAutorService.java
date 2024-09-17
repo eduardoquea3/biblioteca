@@ -5,13 +5,15 @@ import com.sise.biblioteca.entities.Autor;
 import java.util.List;
 
 public interface IAutorService {
-    List<Autor> getAll();
 
-    Autor getById(Integer idAutor);
+  List<Autor> getAll();
 
-    Autor add(Autor autor);
+  Autor getById(Integer idAutor);
 
-    Autor edit(Autor autor);
+  Autor add(Autor autor);
 
-    void remove(Integer idAutor);
+  Autor edit(Autor autor);
+
+  void remove(Integer idAutor);
+
 }

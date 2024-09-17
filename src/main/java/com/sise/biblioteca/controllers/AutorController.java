@@ -18,7 +18,6 @@ import com.sise.biblioteca.entities.Autor;
 import com.sise.biblioteca.service.IAutorService;
 import com.sise.biblioteca.shared.BaseResponse;
 
-
 @RestController
 @RequestMapping("/autores")
 public class AutorController {

@@ -5,13 +5,15 @@ import com.sise.biblioteca.entities.Idioma;
 import java.util.List;
 
 public interface IIdiomaService {
-    List<Idioma> getAll();
 
-    Idioma getById(Integer idIdioma);
+  List<Idioma> getAll();
 
-    Idioma add(Idioma idioma);
+  Idioma getById(Integer idIdioma);
 
-    Idioma edit(Integer idIditorial);
+  Idioma add(Idioma idioma);
 
-    void remove(Integer idIdioma);
+  Idioma edit(Integer idIditorial);
+
+  void remove(Integer idIdioma);
+
 }

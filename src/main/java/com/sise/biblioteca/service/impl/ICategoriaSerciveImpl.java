@@ -11,30 +11,32 @@ import java.util.List;
 @Service
 public class ICategoriaSerciveImpl implements ICategoriaService {
 
-    @Autowired
-    private  final ICategoriaRepository iCategoriaRepository;
+  @Autowired
+  private ICategoriaRepository categoriaRepository;
 
-    public ICategoriaSerciveImpl(ICategoriaRepository iCategoriaRepository) {
-        this.iCategoriaRepository = iCategoriaRepository;
-    }
-    @Override
-    public List<Categoria> getAll(){
-        return null;
-    }
-    @Override
-    public Categoria getById(Integer idCategoria){
-        return  null;
-    }
-    @Override
-    public Categoria add(Categoria categoria){
-        return null;
-    }
-    @Override
-    public Categoria edit(Integer idCategoria){
-        return null;
-    }
-    @Override
-    public void remove(Integer IdCategoria){
+  @Override
+  public List<Categoria> getAll() {
+    return null;
+  }
 
-    }
+  @Override
+  public Categoria getById(Integer idCategoria) {
+    return null;
+  }
+
+  @Override
+  public Categoria add(Categoria categoria) {
+    return null;
+  }
+
+  @Override
+  public Categoria edit(Integer idCategoria) {
+    return null;
+  }
+
+  @Override
+  public void remove(Integer IdCategoria) {
+
+  }
+
 }

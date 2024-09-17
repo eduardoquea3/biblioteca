@@ -5,13 +5,15 @@ import com.sise.biblioteca.entities.Editorial;
 import java.util.List;
 
 public interface IEditorialService {
-    List<Editorial> getAll();
 
-    Editorial getById(Integer idEditorial);
+  List<Editorial> getAll();
 
-    Editorial add(Editorial editorial);
+  Editorial getById(Integer idEditorial);
 
-    Editorial edit(Integer IdEditorial);
+  Editorial add(Editorial editorial);
 
-    void remove(Integer IdEditorial);
+  Editorial edit(Integer IdEditorial);
+
+  void remove(Integer IdEditorial);
+
 }

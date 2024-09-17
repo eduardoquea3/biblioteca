@@ -4,6 +4,9 @@
 GET {{URL}}/autores HTTP/1.1
 
 ###
+# GET {{URL}}/autores/15 HTTP/1.1
+
+###
 POST {{URL}}/autores HTTP/1.1
 content-type: application/json
 
@@ -16,7 +19,7 @@ PUT {{URL}}/autores/15 HTTP/1.1
 content-type: application/json
 
 {
-  "nombre": "Aristocrates"
+  "nombre": "Homero"
 }
 
 ###

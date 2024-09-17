@@ -12,34 +12,32 @@ import java.util.List;
 public class IAutorServiceImpl  implements IAutorService {
 
     @Autowired
-    private  final IAutorRespository  iAutorRespository;
-
-
-    public IAutorServiceImpl(IAutorRespository iAutorRespository) {
-        this.iAutorRespository = iAutorRespository;
-    }
+    private IAutorRespository  autorRespository;
 
     @Override
     public List<Autor> getAll(){
-        return null;
+      // return autorRespository.findByEstadbyte)1);
+      return null;
     }
 
     @Override
-    public Autor getById(Integer idAutor){
-        return null;
+    public Autor getById(Integer idAutor) {
+      // return autorRespository.getById(idAutor);
+      // return autorRespository.getOne(idAutor);
+      return autorRespository.findOneByIdAutorAndEstado(idAutor,(byte)1);
     }
 
     @Override
     public Autor add(Autor autor){
-        return null;
+        return autorRespository.save(autor);
     }
 
     @Override
-    public Autor edit(Integer idAutor){
-        return null;
+    public Autor edit(Autor autor){
+      return autorRespository.save(autor);
     }
     @Override
     public void remove(Integer idAutor){
-
+      // autorRespository.hidden(idAutor);
     }
 }

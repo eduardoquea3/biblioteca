@@ -11,7 +11,7 @@ public interface IAutorService {
 
     Autor add(Autor autor);
 
-    Autor edit(Integer idAutor);
+    Autor edit(Autor autor);
 
     void remove(Integer idAutor);
 }

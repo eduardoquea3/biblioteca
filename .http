@@ -4,9 +4,6 @@
 GET {{URL}}/autores HTTP/1.1
 
 ###
-# GET {{URL}}/autores/15 HTTP/1.1
-
-###
 POST {{URL}}/autores HTTP/1.1
 content-type: application/json
 
@@ -24,3 +21,27 @@ content-type: application/json
 
 ###
 PATCH {{URL}}/autores/15
+
+###
+GET {{URL}}/categorias HTTP/1.1
+
+###
+POST {{URL}}/categorias HTTP/1.1
+content-type: application/json
+
+{
+  "nombre": "Literatura Clasica"
+}
+
+###
+PUT {{URL}}/categorias/11 HTTP/1.1
+content-type: application/json
+
+{
+  "nombre": "Biografia"
+}
+
+###
+PATCH {{URL}}/categorias/13
+
+###

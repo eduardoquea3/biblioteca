@@ -16,27 +16,27 @@ public class ICategoriaSerciveImpl implements ICategoriaService {
 
   @Override
   public List<Categoria> getAll() {
-    return null;
+    return categoriaRepository.findByEstado(true);
   }
 
   @Override
   public Categoria getById(Integer idCategoria) {
-    return null;
+    return categoriaRepository.findOneByIdCategoriaAndEstado(idCategoria, true);
   }
 
   @Override
   public Categoria add(Categoria categoria) {
-    return null;
+    return categoriaRepository.save(categoria);
   }
 
   @Override
-  public Categoria edit(Integer idCategoria) {
-    return null;
+  public Categoria edit(Categoria categoria) {
+    return categoriaRepository.save(categoria);
   }
 
   @Override
-  public void remove(Integer IdCategoria) {
-
+  public void remove(Integer idCategoria) {
+    categoriaRepository.remove(idCategoria);
   }
 
 }

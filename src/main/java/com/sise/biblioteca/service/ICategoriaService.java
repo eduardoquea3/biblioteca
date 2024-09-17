@@ -12,8 +12,8 @@ public interface ICategoriaService {
 
   Categoria add(Categoria categoria);
 
-  Categoria edit(Integer idCategoria);
+  Categoria edit(Categoria categoria);
 
-  void remove(Integer IdCategoria);
+  void remove(Integer idCategoria);
 
 }

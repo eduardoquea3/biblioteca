@@ -1,5 +1,8 @@
 package com.sise.biblioteca.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,38 +14,45 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sise.biblioteca.entities.Categoria;
+import com.sise.biblioteca.service.ICategoriaService;
 import com.sise.biblioteca.shared.BaseResponse;
 
 @RestController
 @RequestMapping("/categorias")
 public class CategoriaController {
 
-  // add service
+  @Autowired
+  private ICategoriaService categoriaService;
 
   @GetMapping("")
-  public ResponseEntity<BaseResponse> getAll() {
+  public ResponseEntity<BaseResponse> getCategorias() {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      List<Categoria> categorias = categoriaService.getAll();
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(categorias), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @PostMapping("")
-  // change type class
-  public ResponseEntity<BaseResponse> add(@RequestBody Integer editorial) {
+  public ResponseEntity<BaseResponse> addCategoria(@RequestBody Categoria categoria) {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      categoriaService.add(categoria);
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(categoria), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @PutMapping("/{idCategoria}")
-  // change type class
-  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idCategoria, @RequestBody Integer categoria) {
+  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idCategoria, @RequestBody Categoria categoria) {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      if (categoriaService.getById(idCategoria) == null)
+        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
+      categoria.setIdCategoria(idCategoria);
+      categoriaService.edit(categoria);
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(categoria), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -51,6 +61,9 @@ public class CategoriaController {
   @PatchMapping("/{idCategoria}")
   public ResponseEntity<BaseResponse> remove(@PathVariable Integer idCategoria) {
     try {
+      if (categoriaService.getById(idCategoria) == null)
+        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
+      categoriaService.remove(idCategoria);
       return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

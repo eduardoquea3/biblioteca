@@ -16,15 +16,14 @@ public class IAutorServiceImpl  implements IAutorService {
 
     @Override
     public List<Autor> getAll(){
-      // return autorRespository.findByEstadbyte)1);
-      return null;
+      return autorRespository.findByEstado(true);
+      // return null;
     }
 
     @Override
     public Autor getById(Integer idAutor) {
-      // return autorRespository.getById(idAutor);
       // return autorRespository.getOne(idAutor);
-      return autorRespository.findOneByIdAutorAndEstado(idAutor,(byte)1);
+      return autorRespository.findOneByIdAutorAndEstado(idAutor,true);
     }
 
     @Override
@@ -38,6 +37,6 @@ public class IAutorServiceImpl  implements IAutorService {
     }
     @Override
     public void remove(Integer idAutor){
-      // autorRespository.hidden(idAutor);
+      autorRespository.remove(idAutor);
     }
 }

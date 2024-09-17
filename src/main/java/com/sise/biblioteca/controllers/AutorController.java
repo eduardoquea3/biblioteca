@@ -18,6 +18,7 @@ import com.sise.biblioteca.entities.Autor;
 import com.sise.biblioteca.service.IAutorService;
 import com.sise.biblioteca.shared.BaseResponse;
 
+
 @RestController
 @RequestMapping("/autores")
 public class AutorController {
@@ -51,6 +52,7 @@ public class AutorController {
       if (autorService.getById(idAutor) == null)
         return new ResponseEntity<BaseResponse>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
       autor.setIdAutor(idAutor);
+      autorService.edit(autor);
       return new ResponseEntity<BaseResponse>(BaseResponse.success(autor), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -60,8 +62,10 @@ public class AutorController {
   @PatchMapping("/{idAutor}")
   public ResponseEntity<BaseResponse> remove(@PathVariable Integer idAutor) {
     try {
-      // autorService.
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      if (autorService.getById(idAutor) == null)
+        return new ResponseEntity<BaseResponse>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
+      autorService.remove(idAutor);
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(idAutor), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }

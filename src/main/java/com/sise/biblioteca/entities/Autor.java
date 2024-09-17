@@ -24,5 +24,5 @@ public class Autor {
 
   @Column(name = "estado", insertable = false, updatable = false)
   @JsonIgnore
-  private byte estado;
+  private boolean estado;
 }

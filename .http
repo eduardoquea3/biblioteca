@@ -1,0 +1,23 @@
+@URL = http://localhost:8080
+
+###
+GET {{URL}}/autores HTTP/1.1
+
+###
+POST {{URL}}/autores HTTP/1.1
+content-type: application/json
+
+{
+  "nombre": "Homero"
+}
+
+###
+PUT {{URL}}/autores/15 HTTP/1.1
+content-type: application/json
+
+{
+  "nombre": "Aristocrates"
+}
+
+###
+PATCH {{URL}}/autores/15

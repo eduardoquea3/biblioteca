@@ -12,7 +12,7 @@ public interface IIdiomaService {
 
   Idioma add(Idioma idioma);
 
-  Idioma edit(Integer idIditorial);
+  Idioma edit(Idioma idioma);
 
   void remove(Integer idIdioma);
 

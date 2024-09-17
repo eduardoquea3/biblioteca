@@ -12,8 +12,8 @@ public interface IEditorialService {
 
   Editorial add(Editorial editorial);
 
-  Editorial edit(Integer IdEditorial);
+  Editorial edit(Editorial editorial);
 
-  void remove(Integer IdEditorial);
+  void remove(Integer idEditorial);
 
 }

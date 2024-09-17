@@ -16,27 +16,27 @@ public class ISubGeneroServiceImpl implements ISubGeneroService {
 
   @Override
   public List<SubGenero> getAll() {
-    return null;
+    return subGeneroRepository.findByEstado(true);
   }
 
   @Override
   public SubGenero getById(Integer idSubGenero) {
-    return null;
+    return subGeneroRepository.findOneByIdSubgeneroAndEstado(idSubGenero, true);
   }
 
   @Override
   public SubGenero add(SubGenero subGenero) {
-    return null;
+    return subGeneroRepository.save(subGenero);
   }
 
   @Override
-  public SubGenero edit(Integer idSubGenero) {
-    return null;
+  public SubGenero edit(SubGenero subGenero) {
+    return subGeneroRepository.save(subGenero);
   }
 
   @Override
   public void remove(Integer idSubGenero) {
-
+    subGeneroRepository.remove(idSubGenero);
   }
 
 }

@@ -12,7 +12,7 @@ public interface ISubGeneroService {
 
   SubGenero add(SubGenero subGenero);
 
-  SubGenero edit(Integer idSubGenero);
+  SubGenero edit(SubGenero subGenero);
 
   void remove(Integer idSubGenero);
 

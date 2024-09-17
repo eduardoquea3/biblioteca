@@ -53,6 +53,6 @@ public class Libros {
 
   @Column(name = "estado", insertable = false, updatable = false)
   @JsonIgnore
-  private byte estado;
+  private boolean estado;
 
 }

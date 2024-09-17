@@ -16,28 +16,28 @@ public class IEditorialServiceImpl implements IEditorialService {
 
   @Override
   public List<Editorial> getAll() {
-    return null;
+    return editorialRepository.findByEstado(true);
   }
 
   @Override
   public Editorial getById(Integer idEditorial) {
-    return null;
+    return editorialRepository.findOneByIdEditorialAndEstado(idEditorial, true);
 
   }
 
   @Override
   public Editorial add(Editorial editorial) {
-    return null;
+    return editorialRepository.save(editorial);
   }
 
   @Override
-  public Editorial edit(Integer IdEditorial) {
-    return null;
+  public Editorial edit(Editorial editorial) {
+    return editorialRepository.save(editorial);
   }
 
   @Override
-  public void remove(Integer IdEditorial) {
-
+  public void remove(Integer idEditorial) {
+    editorialRepository.remove(idEditorial);
   }
 
 }

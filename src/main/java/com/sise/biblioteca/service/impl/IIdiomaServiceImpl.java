@@ -16,28 +16,28 @@ public class IIdiomaServiceImpl implements IIdiomaService {
 
   @Override
   public List<Idioma> getAll() {
-    return null;
+    return idiomaRepository.findByEstado(true);
   }
 
   @Override
   public Idioma getById(Integer idIdioma) {
-    return null;
+    return idiomaRepository.findOneByIdIdiomaAndEstado(idIdioma, true);
   }
 
   @Override
   public Idioma add(Idioma idioma) {
-    return null;
+    return idiomaRepository.save(idioma);
 
   }
 
   @Override
-  public Idioma edit(Integer idIditorial) {
-    return null;
+  public Idioma edit(Idioma idioma) {
+    return idiomaRepository.save(idioma);
   }
 
   @Override
   public void remove(Integer idIdioma) {
-
+    idiomaRepository.remove(idIdioma);
   }
 
 }

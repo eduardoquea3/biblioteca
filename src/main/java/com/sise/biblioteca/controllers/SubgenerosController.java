@@ -1,5 +1,8 @@
 package com.sise.biblioteca.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,28 +14,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sise.biblioteca.entities.SubGenero;
+import com.sise.biblioteca.service.ISubGeneroService;
 import com.sise.biblioteca.shared.BaseResponse;
 
 @RestController
 @RequestMapping("/subgeneros")
 public class SubgenerosController {
 
-  // add service
+  @Autowired
+  private ISubGeneroService subgeneroService;
 
   @GetMapping("")
   public ResponseEntity<BaseResponse> getAll() {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      List<SubGenero> subgeneros = subgeneroService.getAll();
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(subgeneros), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @PostMapping("")
-  // change type class
-  public ResponseEntity<BaseResponse> add(@RequestBody Integer subgenero) {
+  public ResponseEntity<BaseResponse> add(@RequestBody SubGenero subgenero) {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      subgeneroService.add(subgenero);
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(subgenero), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -40,9 +47,13 @@ public class SubgenerosController {
 
   @PutMapping("/{idSubgenero}")
   // change type class
-  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idSubgenero, @RequestBody Integer subgenero) {
+  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idSubgenero, @RequestBody SubGenero subgenero) {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      if (subgeneroService.getById(idSubgenero) == null)
+        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
+      subgenero.setIdSubgenero(idSubgenero);
+      subgeneroService.edit(subgenero);
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(subgenero), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -51,7 +62,10 @@ public class SubgenerosController {
   @PatchMapping("/{idSubgenero}")
   public ResponseEntity<BaseResponse> remove(@PathVariable Integer idSubgenero) {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      if (subgeneroService.getById(idSubgenero) == null)
+        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
+      subgeneroService.remove(idSubgenero);
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(idSubgenero), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }

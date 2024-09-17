@@ -12,13 +12,13 @@ public class SubGenero {
   @Id
   @Column(name = "idsubgenero")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer idSubgenro;
+  private Integer idSubgenero;
 
   @Column(name = "nombre")
   private String nombre;
 
   @Column(name = "estado", insertable = false, updatable = false)
   @JsonIgnore
-  private byte estado;
+  private boolean estado;
 
 }

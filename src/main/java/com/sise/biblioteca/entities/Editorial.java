@@ -18,6 +18,6 @@ public class Editorial {
 
   @Column(name = "estado", insertable = false, updatable = false)
   @JsonIgnore
-  private byte estado;
+  private boolean estado;
 
 }

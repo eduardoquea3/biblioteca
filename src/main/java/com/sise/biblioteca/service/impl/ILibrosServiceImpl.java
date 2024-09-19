@@ -11,8 +11,8 @@ import java.util.List;
 @Service
 public class ILibrosServiceImpl implements ILibrosService {
 
-    @Autowired
-    private final ILibrosRepository librosRepository;
+  @Autowired
+  private ILibrosRepository libroRepository;
 
   @Override
   public List<Libros> getAll() {

@@ -1,0 +1,115 @@
+@URL = http://localhost:8080
+
+### Autores
+GET {{URL}}/autores HTTP/1.1
+
+###
+POST {{URL}}/autores HTTP/1.1
+content-type: application/json
+
+{
+  "nombre": "Jose Maria Arguedas"
+}
+
+###
+PUT {{URL}}/autores/26 HTTP/1.1
+content-type: application/json
+
+{
+  "nombre": "Aristrocates"
+}
+
+###
+PATCH {{URL}}/autores/26
+
+###
+### Categorias
+GET {{URL}}/categorias HTTP/1.1
+
+###
+POST {{URL}}/categorias HTTP/1.1
+content-type: application/json
+
+{
+  "nombre": "Literatura Clasica"
+}
+
+###
+PUT {{URL}}/categorias/11 HTTP/1.1
+content-type: application/json
+
+{
+  "nombre": "Biografia"
+}
+
+###
+PATCH {{URL}}/categorias/11
+
+###
+### Idiomas
+GET {{URL}}/idiomas HTTP/1.1
+
+###
+POST {{URL}}/idiomas HTTP/1.1
+content-type: application/json
+
+{
+  "nombre": "Aleman"
+}
+
+###
+PUT {{URL}}/idiomas/3 HTTP/1.1
+content-type: application/json
+
+{
+  "nombre": "Portugues"
+}
+
+###
+PATCH {{URL}}/idiomas/3
+
+###
+### Subgeneros
+GET {{URL}}/subgeneros HTTP/1.1
+
+###
+POST {{URL}}/subgeneros HTTP/1.1
+content-type: application/json
+
+{
+  "nombre": "prueba"
+}
+
+###
+PUT {{URL}}/subgeneros/12 HTTP/1.1
+content-type: application/json
+
+{
+  "nombre": "prueba xd"
+}
+
+###
+PATCH {{URL}}/subgeneros/12
+
+###
+### Subgeneros
+GET {{URL}}/editoriales HTTP/1.1
+
+###
+POST {{URL}}/editoriales HTTP/1.1
+content-type: application/json
+
+{
+  "nombre": "Siglo XXI"
+}
+
+###
+PUT {{URL}}/editoriales/11 HTTP/1.1
+content-type: application/json
+
+{
+  "nombre": "Siglo XXI"
+}
+
+###
+PATCH {{URL}}/editoriales/11

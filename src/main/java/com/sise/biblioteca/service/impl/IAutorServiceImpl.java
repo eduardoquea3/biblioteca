@@ -9,37 +9,34 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class IAutorServiceImpl  implements IAutorService {
+public class IAutorServiceImpl implements IAutorService {
 
-    @Autowired
-    private  final IAutorRespository  iAutorRespository;
+  @Autowired
+  private IAutorRespository autorRespository;
 
+  @Override
+  public List<Autor> getAll() {
+    return autorRespository.findByEstado(true);
+  }
 
-    public IAutorServiceImpl(IAutorRespository iAutorRespository) {
-        this.iAutorRespository = iAutorRespository;
-    }
+  @Override
+  public Autor getById(Integer idAutor) {
+    return autorRespository.findOneByIdAutorAndEstado(idAutor, true);
+  }
 
-    @Override
-    public List<Autor> getAll(){
-        return null;
-    }
+  @Override
+  public Autor add(Autor autor) {
+    return autorRespository.save(autor);
+  }
 
-    @Override
-    public Autor getById(Integer idAutor){
-        return null;
-    }
+  @Override
+  public Autor edit(Autor autor) {
+    return autorRespository.save(autor);
+  }
 
-    @Override
-    public Autor add(Autor autor){
-        return null;
-    }
+  @Override
+  public void remove(Integer idAutor) {
+    autorRespository.remove(idAutor);
+  }
 
-    @Override
-    public Autor edit(Integer idAutor){
-        return null;
-    }
-    @Override
-    public void remove(Integer idAutor){
-
-    }
 }

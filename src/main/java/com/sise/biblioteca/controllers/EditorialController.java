@@ -1,5 +1,8 @@
 package com.sise.biblioteca.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,38 +14,45 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sise.biblioteca.entities.Editorial;
+import com.sise.biblioteca.service.IEditorialService;
 import com.sise.biblioteca.shared.BaseResponse;
 
 @RestController
 @RequestMapping("/editoriales")
 public class EditorialController {
 
-  // add service
+  @Autowired
+  private IEditorialService editorialService;
 
   @GetMapping("")
   public ResponseEntity<BaseResponse> getAll() {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      List<Editorial> editoriales = editorialService.getAll();
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(editoriales), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @PostMapping("")
-  // change type class
-  public ResponseEntity<BaseResponse> add(@RequestBody Integer editorial) {
+  public ResponseEntity<BaseResponse> add(@RequestBody Editorial editorial) {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      editorialService.add(editorial);
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(editorial), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @PutMapping("/{idEditorial}")
-  // change type class
-  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idEditorial, @RequestBody Integer editorial) {
+  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idEditorial, @RequestBody Editorial editorial) {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      if (editorialService.getById(idEditorial) == null)
+        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
+      editorial.setIdEditorial(idEditorial);
+      editorialService.edit(editorial);
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(editorial), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -51,7 +61,10 @@ public class EditorialController {
   @PatchMapping("/{idEditorial}")
   public ResponseEntity<BaseResponse> remove(@PathVariable Integer idEditorial) {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      if (editorialService.getById(idEditorial) == null)
+        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
+      editorialService.remove(idEditorial);
+      return new ResponseEntity<>(BaseResponse.success(), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }

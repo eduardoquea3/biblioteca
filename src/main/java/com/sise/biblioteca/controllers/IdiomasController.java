@@ -1,5 +1,8 @@
 package com.sise.biblioteca.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,37 +14,44 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sise.biblioteca.entities.Idioma;
+import com.sise.biblioteca.service.IIdiomaService;
 import com.sise.biblioteca.shared.BaseResponse;
 
 @RestController
 @RequestMapping("/idiomas")
 public class IdiomasController {
 
-  // add service
+  @Autowired
+  private IIdiomaService idiomaService;
 
   @GetMapping("")
   public ResponseEntity<BaseResponse> getAll() {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      List<Idioma> idiomas = idiomaService.getAll();
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(idiomas), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @PostMapping("")
-  // change type class
-  public ResponseEntity<BaseResponse> add(@RequestBody Integer idioma) {
+  public ResponseEntity<BaseResponse> add(@RequestBody Idioma idioma) {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      idiomaService.add(idioma);
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(idioma), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @PutMapping("/{idIdioma}")
-  // change type class
-  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idIdioma, @RequestBody Integer idioma) {
+  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idIdioma, @RequestBody Idioma idioma) {
     try {
+      if (idiomaService.getById(idIdioma) == null)
+        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
+      idioma.setIdIdioma(idIdioma);
+      idiomaService.edit(idioma);
       return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -51,6 +61,9 @@ public class IdiomasController {
   @PatchMapping("/{idIdioma}")
   public ResponseEntity<BaseResponse> remove(@PathVariable Integer idIdioma) {
     try {
+      if (idiomaService.getById(idIdioma) == null)
+        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
+      idiomaService.remove(idIdioma);
       return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

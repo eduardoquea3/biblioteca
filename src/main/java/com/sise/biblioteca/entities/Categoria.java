@@ -4,24 +4,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
- @Data
- @Entity
- @Table(name = "categorias")
+@Data
+@Entity
+@Table(name = "categorias")
 public class Categoria {
 
- @Id
- @Column(name = "idcategoria")
+  @Id
+  @Column(name = "idcategoria")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer idCategoria;
 
- @Column(name="nombee")
- private String nombre;
+  @Column(name = "nombre")
+  private String nombre;
 
- @Column(name="estado",insertable = false,updatable = false)
- @JsonIgnore
- private byte estado;
-
-
-
+  @Column(name = "estado", insertable = false, updatable = false)
+  @JsonIgnore
+  private boolean estado;
 
 }

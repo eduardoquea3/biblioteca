@@ -5,13 +5,15 @@ import com.sise.biblioteca.entities.SubGenero;
 import java.util.List;
 
 public interface ISubGeneroService {
-    List<SubGenero> getAll();
 
-    SubGenero getById(Integer idSubGenero);
+  List<SubGenero> getAll();
 
-    SubGenero add(SubGenero subGenero);
+  SubGenero getById(Integer idSubGenero);
 
-    SubGenero edit(Integer idSubGenero);
+  SubGenero add(SubGenero subGenero);
 
-    void remove(Integer idSubGenero);
+  SubGenero edit(SubGenero subGenero);
+
+  void remove(Integer idSubGenero);
+
 }

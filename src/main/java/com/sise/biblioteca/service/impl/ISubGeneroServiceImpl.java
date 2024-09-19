@@ -11,31 +11,32 @@ import java.util.List;
 @Service
 public class ISubGeneroServiceImpl implements ISubGeneroService {
 
-    @Autowired
-    private final ISubGeneroRepository iSubGeneroRepository;
+  @Autowired
+  private ISubGeneroRepository subGeneroRepository;
 
-    public ISubGeneroServiceImpl(ISubGeneroRepository iSubGeneroRepository) {
-        this.iSubGeneroRepository = iSubGeneroRepository;
-    }
+  @Override
+  public List<SubGenero> getAll() {
+    return subGeneroRepository.findByEstado(true);
+  }
 
-    @Override
-    public List<SubGenero> getAll(){
-        return null;
-    }
-    @Override
-    public SubGenero getById(Integer idSubGenero){
-        return  null;
-    }
-    @Override
-    public SubGenero add(SubGenero subGenero){
-        return  null;
-    }
-    @Override
-    public SubGenero edit(Integer idSubGenero){
-        return  null;
-    }
-    @Override
-    public void remove(Integer idSubGenero){
+  @Override
+  public SubGenero getById(Integer idSubGenero) {
+    return subGeneroRepository.findOneByIdSubgeneroAndEstado(idSubGenero, true);
+  }
 
-    }
+  @Override
+  public SubGenero add(SubGenero subGenero) {
+    return subGeneroRepository.save(subGenero);
+  }
+
+  @Override
+  public SubGenero edit(SubGenero subGenero) {
+    return subGeneroRepository.save(subGenero);
+  }
+
+  @Override
+  public void remove(Integer idSubGenero) {
+    subGeneroRepository.remove(idSubGenero);
+  }
+
 }

@@ -14,35 +14,29 @@ public class ILibrosServiceImpl implements ILibrosService {
     @Autowired
     private final ILibrosRepository librosRepository;
 
+  @Override
+  public List<Libros> getAll() {
+    return libroRepository.findByEstado(true);
+  }
 
-    public ILibrosServiceImpl(ILibrosRepository librosRepository) {
-        this.librosRepository = librosRepository;
-    }
-    @Override
-    public List<Libros>getAll(){
-        return librosRepository.findAll();
-     }
+  @Override
+  public Libros getById(Integer idLibros) {
+    return libroRepository.findOneByIdLibroAndEstado(idLibros, true);
+  }
 
-     @Override
-     public Libros getById(Integer idLibros){
-        return null;
-    }
+  @Override
+  public Libros add(Libros libros) {
+    return libroRepository.save(libros);
+  }
 
-     @Override
-     public Libros add(Libros libros){
-        return null;
-     }
+  @Override
+  public Libros edit(Libros libros) {
+    return libroRepository.save(libros);
+  }
 
-     @Override
-     public Libros edit(Integer idLibros){
-        return null;
-     }
-     @Override
-     public void remove(Integer idLibros){
-
-     }
-
-
-
+  @Override
+  public void remove(Integer idLibros) {
+    libroRepository.remove(idLibros);
+  }
 
 }

@@ -6,9 +6,14 @@ import java.util.List;
 
 public interface ILibrosService {
 
-    List<Libros>getAll();
-    Libros getById(Integer idLibros);
-    Libros add(Libros libros);
-    Libros edit(Integer idLibros);
-    void remove(Integer idLibros);
+  List<Libros> getAll();
+
+  Libros getById(Integer idLibros);
+
+  Libros add(Libros libros);
+
+  Libros edit(Libros libros);
+
+  void remove(Integer idLibros);
+
 }

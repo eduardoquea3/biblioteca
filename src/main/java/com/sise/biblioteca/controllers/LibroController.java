@@ -2,9 +2,15 @@ package com.sise.biblioteca.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.yaml.snakeyaml.representer.BaseRepresenter;
 
 import com.sise.biblioteca.shared.BaseResponse;
 
+import java.util.List;
+import com.sise.biblioteca.entities.Libros;
+import com.sise.biblioteca.service.ILibrosService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +24,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/libros")
 public class LibroController {
 
-  // add service
+  @Autowired
+  private ILibrosService libroService;
 
   @GetMapping("")
   public ResponseEntity<BaseResponse> getAll() {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(null), HttpStatus.OK);
+      List<Libros> libros = libroService.getAll();
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(libros), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -32,16 +40,19 @@ public class LibroController {
   @GetMapping("/{idLibro}")
   public ResponseEntity<BaseResponse> getById(@PathVariable Integer idLibro) {
     try {
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      Libros libro = libroService.getById(idLibro);
+      if (libro == null)
+        return new ResponseEntity<BaseResponse>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(libro), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
   @PostMapping("")
-  // change type class
-  public ResponseEntity<BaseResponse> add(@RequestBody Integer libro) {
+  public ResponseEntity<BaseResponse> add(@RequestBody Libros libro) {
     try {
+      libroService.add(libro);
       return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -49,9 +60,12 @@ public class LibroController {
   }
 
   @PutMapping("/{idLibro}")
-  // change type class
-  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idLibro, @RequestBody Integer libro) {
+  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idLibro, @RequestBody Libros libro) {
     try {
+      if (libroService.getById(idLibro) == null)
+        return new ResponseEntity<BaseResponse>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
+      libro.setIdLibro(idLibro);
+      libroService.edit(libro);
       return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -61,6 +75,9 @@ public class LibroController {
   @PatchMapping("/{idLibro}")
   public ResponseEntity<BaseResponse> remove(@PathVariable Integer idLibro) {
     try {
+      if (libroService.getById(idLibro) == null)
+        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
+      libroService.remove(idLibro);
       return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

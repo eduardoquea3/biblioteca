@@ -2,7 +2,6 @@ package com.sise.biblioteca.controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.yaml.snakeyaml.representer.BaseRepresenter;
 
 import com.sise.biblioteca.shared.BaseResponse;
 
@@ -53,7 +52,7 @@ public class LibroController {
   public ResponseEntity<BaseResponse> add(@RequestBody Libros libro) {
     try {
       libroService.add(libro);
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(libro), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -66,7 +65,7 @@ public class LibroController {
         return new ResponseEntity<BaseResponse>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
       libro.setIdLibro(idLibro);
       libroService.edit(libro);
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
+      return new ResponseEntity<BaseResponse>(BaseResponse.success(libro), HttpStatus.OK);
     } catch (Exception e) {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }

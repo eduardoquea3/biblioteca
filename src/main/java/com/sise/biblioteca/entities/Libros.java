@@ -11,6 +11,7 @@ public class Libros {
 
   @Id
   @Column(name = "idlibro", insertable = false, updatable = false)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer idLibro;
 
   @Column(name = "serialnumber")
@@ -20,23 +21,23 @@ public class Libros {
   private String nombre;
 
   @ManyToOne
-  @JoinColumn(name = "idautor", insertable = false, updatable = false)
+  @JoinColumn(name = "idautor", nullable = false)
   private Autor autor;
 
   @ManyToOne
-  @JoinColumn(name = "ididioma", insertable = false, updatable = false)
+  @JoinColumn(name = "ididioma", nullable = false)
   private Idioma idioma;
 
   @ManyToOne
-  @JoinColumn(name = "ideditorial", insertable = false, updatable = false)
+  @JoinColumn(name = "ideditorial", nullable = false)
   private Editorial editorial;
 
   @ManyToOne
-  @JoinColumn(name = "idcategoria", insertable = false, updatable = false)
+  @JoinColumn(name = "idcategoria", nullable = false)
   private Categoria categoria;
 
   @ManyToOne
-  @JoinColumn(name = "idsubgenero", insertable = false, updatable = false)
+  @JoinColumn(name = "idsubgenero", nullable = false)
   private SubGenero subGenero;
 
   @Column(name = "anio")

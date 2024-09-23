@@ -8,7 +8,7 @@ POST {{URL}}/autores HTTP/1.1
 content-type: application/json
 
 {
-  "nombre": "Jose Maria Arguedas"
+  "nombre": "Homero"
 }
 
 ###
@@ -92,7 +92,7 @@ content-type: application/json
 PATCH {{URL}}/subgeneros/12
 
 ###
-### Subgeneros
+### Editoriales
 GET {{URL}}/editoriales HTTP/1.1
 
 ###
@@ -113,3 +113,69 @@ content-type: application/json
 
 ###
 PATCH {{URL}}/editoriales/11
+
+###
+### Libros
+GET {{URL}}/libros HTTP/1.1
+
+###
+GET {{URL}}/libros/28 HTTP/1.1
+
+###
+POST {{URL}}/libros HTTP/1.1
+content-type: application/json
+
+{
+  "serialNumber": "CN004",
+  "nombre": "Cien años de soledad",
+  "autor": {
+    "idAutor": 1
+  },
+  "idioma": {
+    "idIdioma": 1
+  },
+  "editorial": {
+    "idEditorial": 2
+  },
+  "categoria": {
+    "idCategoria": 2
+  },
+  "subGenero": {
+    "idSubgenero": 2
+  },
+  "anio": 1967,
+  "unidades": 100,
+  "cantidadPaginas": 471,
+  "urlImagen": "https://example.com/cien-anos-de-soledad.jpg"
+}
+
+###
+PUT {{URL}}/libros/28 HTTP/1.1
+content-type: application/json
+
+{
+  "serialNumber": "CN004",
+  "nombre": "Cien años de pereza",
+  "autor": {
+    "idAutor": 3
+  },
+  "idioma": {
+    "idIdioma": 1
+  },
+  "editorial": {
+    "idEditorial": 2
+  },
+  "categoria": {
+    "idCategoria": 2
+  },
+  "subGenero": {
+    "idSubgenero": 2
+  },
+  "anio": 1967,
+  "unidades": 100,
+  "cantidadPaginas": 471,
+  "urlImagen": "https://example.com/cien-anos-de-soledad.jpg"
+}
+
+###
+PATCH {{URL}}/libros/28

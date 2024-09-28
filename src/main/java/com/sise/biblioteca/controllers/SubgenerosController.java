@@ -18,13 +18,18 @@ import com.sise.biblioteca.entities.SubGenero;
 import com.sise.biblioteca.service.ISubGeneroService;
 import com.sise.biblioteca.shared.BaseResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/subgeneros")
+@Tag(name = "subgeneros")
 public class SubgenerosController {
 
   @Autowired
   private ISubGeneroService subgeneroService;
 
+  @Operation(summary = "obtener todos los SubGeneros")
   @GetMapping("")
   public ResponseEntity<BaseResponse> getAll() {
     try {
@@ -34,7 +39,7 @@ public class SubgenerosController {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
+  @Operation(summary = "Agregar un SubGenero")
   @PostMapping("")
   public ResponseEntity<BaseResponse> add(@RequestBody SubGenero subgenero) {
     try {
@@ -44,6 +49,7 @@ public class SubgenerosController {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+  @Operation(summary = "Actualizar  SubGenero")
 
   @PutMapping("/{idSubgenero}")
   // change type class
@@ -58,6 +64,7 @@ public class SubgenerosController {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+  @Operation(summary = "Eliminar logicamente SubGenero")
 
   @PatchMapping("/{idSubgenero}")
   public ResponseEntity<BaseResponse> remove(@PathVariable Integer idSubgenero) {

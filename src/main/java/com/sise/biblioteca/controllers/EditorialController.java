@@ -18,6 +18,8 @@ import com.sise.biblioteca.entities.Editorial;
 import com.sise.biblioteca.service.IEditorialService;
 import com.sise.biblioteca.shared.BaseResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/editoriales")
 public class EditorialController {
@@ -25,6 +27,7 @@ public class EditorialController {
   @Autowired
   private IEditorialService editorialService;
 
+   @Operation(summary = "obtener todos las Editoriales")
   @GetMapping("")
   public ResponseEntity<BaseResponse> getAll() {
     try {
@@ -35,6 +38,8 @@ public class EditorialController {
     }
   }
 
+  @Operation(summary = "Agregar Editoriales")
+
   @PostMapping("")
   public ResponseEntity<BaseResponse> add(@RequestBody Editorial editorial) {
     try {
@@ -44,6 +49,8 @@ public class EditorialController {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  @Operation(summary = "Actualizar Editorial")
 
   @PutMapping("/{idEditorial}")
   public ResponseEntity<BaseResponse> edit(@PathVariable Integer idEditorial, @RequestBody Editorial editorial) {
@@ -58,6 +65,7 @@ public class EditorialController {
     }
   }
 
+  @Operation(summary = "Eliminar logicamente Editorial")
   @PatchMapping("/{idEditorial}")
   public ResponseEntity<BaseResponse> remove(@PathVariable Integer idEditorial) {
     try {

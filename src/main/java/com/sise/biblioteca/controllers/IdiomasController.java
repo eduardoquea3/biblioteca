@@ -18,13 +18,18 @@ import com.sise.biblioteca.entities.Idioma;
 import com.sise.biblioteca.service.IIdiomaService;
 import com.sise.biblioteca.shared.BaseResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/idiomas")
+@Tag(name = "Idiomas")
 public class IdiomasController {
 
   @Autowired
   private IIdiomaService idiomaService;
 
+  @Operation(summary = "obtener todos los Idiomas")
   @GetMapping("")
   public ResponseEntity<BaseResponse> getAll() {
     try {
@@ -34,7 +39,7 @@ public class IdiomasController {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
+  @Operation(summary = "Agregar Idioma")
   @PostMapping("")
   public ResponseEntity<BaseResponse> add(@RequestBody Idioma idioma) {
     try {
@@ -44,7 +49,7 @@ public class IdiomasController {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
+  @Operation(summary = "Actualizar Idioma")
   @PutMapping("/{idIdioma}")
   public ResponseEntity<BaseResponse> edit(@PathVariable Integer idIdioma, @RequestBody Idioma idioma) {
     try {
@@ -57,6 +62,8 @@ public class IdiomasController {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
+
+  @Operation(summary = "Eliminar logicamente Idioma")
 
   @PatchMapping("/{idIdioma}")
   public ResponseEntity<BaseResponse> remove(@PathVariable Integer idIdioma) {

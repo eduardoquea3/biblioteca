@@ -18,13 +18,18 @@ import com.sise.biblioteca.entities.Categoria;
 import com.sise.biblioteca.service.ICategoriaService;
 import com.sise.biblioteca.shared.BaseResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/categorias")
+@Tag(name = "Categorias")
 public class CategoriaController {
 
   @Autowired
   private ICategoriaService categoriaService;
 
+   @Operation(summary = "obtener todos las Categorias")
   @GetMapping("")
   public ResponseEntity<BaseResponse> getCategorias() {
     try {
@@ -34,7 +39,7 @@ public class CategoriaController {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
+   @Operation(summary = "Agregar una Categoria")
   @PostMapping("")
   public ResponseEntity<BaseResponse> addCategoria(@RequestBody Categoria categoria) {
     try {
@@ -44,8 +49,8 @@ public class CategoriaController {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
-  @PutMapping("/{idCategoria}")
+   @Operation(summary="Actualizar Categoria")
+ @PutMapping("/{idCategoria}")
   public ResponseEntity<BaseResponse> edit(@PathVariable Integer idCategoria, @RequestBody Categoria categoria) {
     try {
       if (categoriaService.getById(idCategoria) == null)
@@ -57,7 +62,7 @@ public class CategoriaController {
       return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
-
+  @Operation(summary="Eliminar logicamente la categoria")
   @PatchMapping("/{idCategoria}")
   public ResponseEntity<BaseResponse> remove(@PathVariable Integer idCategoria) {
     try {

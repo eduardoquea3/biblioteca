@@ -17,7 +17,7 @@ public class Categoria {
   @Column(name = "nombre")
   private String nombre;
 
-  @Column(name = "estado", insertable = false, updatable = false)
+  @Column(name = "estadoauditoria", insertable = false, updatable = false)
   @JsonIgnore
   private boolean estado;
 

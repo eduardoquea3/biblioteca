@@ -1,4 +1,4 @@
-@URL = http://localhost:8080
+@URL=http://localhost:8080
 
 ### Autores
 GET {{URL}}/autores HTTP/1.1
@@ -22,7 +22,6 @@ content-type: application/json
 ###
 PATCH {{URL}}/autores/26
 
-###
 ### Categorias
 GET {{URL}}/categorias HTTP/1.1
 
@@ -45,7 +44,6 @@ content-type: application/json
 ###
 PATCH {{URL}}/categorias/11
 
-###
 ### Idiomas
 GET {{URL}}/idiomas HTTP/1.1
 
@@ -68,7 +66,6 @@ content-type: application/json
 ###
 PATCH {{URL}}/idiomas/3
 
-###
 ### Subgeneros
 GET {{URL}}/subgeneros HTTP/1.1
 
@@ -91,7 +88,6 @@ content-type: application/json
 ###
 PATCH {{URL}}/subgeneros/12
 
-###
 ### Editoriales
 GET {{URL}}/editoriales HTTP/1.1
 
@@ -114,12 +110,11 @@ content-type: application/json
 ###
 PATCH {{URL}}/editoriales/11
 
-###
 ### Libros
 GET {{URL}}/libros HTTP/1.1
 
 ###
-GET {{URL}}/libros/28 HTTP/1.1
+GET {{URL}}/libros/3 HTTP/1.1
 
 ###
 POST {{URL}}/libros HTTP/1.1

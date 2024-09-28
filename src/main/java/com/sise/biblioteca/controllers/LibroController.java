@@ -5,6 +5,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sise.biblioteca.shared.BaseResponse;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.util.List;
 import com.sise.biblioteca.entities.Libros;
 import com.sise.biblioteca.service.ILibrosService;
@@ -21,11 +24,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/libros")
+@Tag(name = "Libros")
 public class LibroController {
 
   @Autowired
   private ILibrosService libroService;
 
+  @Operation(summary = "obtener todos los libros")
   @GetMapping("")
   public ResponseEntity<BaseResponse> getAll() {
     try {
@@ -36,6 +41,7 @@ public class LibroController {
     }
   }
 
+  @Operation(summary = "obtener libro mediante id")
   @GetMapping("/{idLibro}")
   public ResponseEntity<BaseResponse> getById(@PathVariable Integer idLibro) {
     try {
@@ -48,6 +54,7 @@ public class LibroController {
     }
   }
 
+  @Operation(summary = "agregar un nuevo libro")
   @PostMapping("")
   public ResponseEntity<BaseResponse> add(@RequestBody Libros libro) {
     try {
@@ -58,6 +65,7 @@ public class LibroController {
     }
   }
 
+  @Operation(summary = "actualizar un libro mediante su id")
   @PutMapping("/{idLibro}")
   public ResponseEntity<BaseResponse> edit(@PathVariable Integer idLibro, @RequestBody Libros libro) {
     try {
@@ -71,6 +79,7 @@ public class LibroController {
     }
   }
 
+  @Operation(summary = "eliminar logicamente un libro mediante el usuario")
   @PatchMapping("/{idLibro}")
   public ResponseEntity<BaseResponse> remove(@PathVariable Integer idLibro) {
     try {

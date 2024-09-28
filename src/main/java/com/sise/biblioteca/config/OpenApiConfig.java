@@ -1,0 +1,18 @@
+package com.sise.biblioteca.config;
+
+import org.springframework.context.annotation.Configuration;
+
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+
+@Configuration
+@OpenAPIDefinition(
+  info = @Info(
+    title = "Biblioteca",
+    version = "1.0.0",
+    description = "Este es un CRUD para manejar una biblioteca"
+  )
+)
+public class OpenApiConfig {
+
+}

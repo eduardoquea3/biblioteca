@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class IEditorialServiceImpl implements IEditorialService {
+public class EditorialServiceImpl implements IEditorialService {
 
   @Autowired
   private IEditorialRepository editorialRepository;

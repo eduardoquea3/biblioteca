@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class IIdiomaServiceImpl implements IIdiomaService {
+public class IdiomaServiceImpl implements IIdiomaService {
 
   @Autowired
   private IIdiomaRepository idiomaRepository;

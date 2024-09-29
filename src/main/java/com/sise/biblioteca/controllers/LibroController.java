@@ -43,20 +43,12 @@ public class LibroController {
   public ResponseEntity<Page<Libros>> listarLibros( 
         @RequestParam(defaultValue = "0") int page,
         @RequestParam(defaultValue = "5") int size,
-        @RequestParam(required = false) String nombre) {
+        @RequestParam(required = false) String [] SortBy) {
 
     try {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Libros> libros; 
-
-        if (nombre != null) {
-           
-            pageable = PageRequest.of(page, size, Sort.by("nombre").ascending());
-        } 
-         
+       Pageable pegeable = (SortBy != null) ? PageRequest.of(page, size,Sort.by(SortBy).ascending()):PageRequest.of(page, size);
         
-        libros = libroService.getAll(pageable); 
-
+       Page<Libros> libros=libroService.getAll(pegeable);
         return new ResponseEntity<>(libros, HttpStatus.OK);
     } catch (Exception e) {
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); 

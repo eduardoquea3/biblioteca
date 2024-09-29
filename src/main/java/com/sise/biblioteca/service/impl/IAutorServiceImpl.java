@@ -3,10 +3,13 @@ package com.sise.biblioteca.service.impl;
 import com.sise.biblioteca.entities.Autor;
 import com.sise.biblioteca.repository.IAutorRespository;
 import com.sise.biblioteca.service.IAutorService;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
 
 @Service
 public class IAutorServiceImpl implements IAutorService {
@@ -15,8 +18,8 @@ public class IAutorServiceImpl implements IAutorService {
   private IAutorRespository autorRespository;
 
   @Override
-  public List<Autor> getAll() {
-    return autorRespository.findByEstado(true);
+  public Page<Autor> getAll(Pageable pageable) {
+    return autorRespository.findByEstado(true,pageable);
   }
 
   @Override

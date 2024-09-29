@@ -1,12 +1,13 @@
 package com.sise.biblioteca.service;
 
 import com.sise.biblioteca.entities.Categoria;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
 
 public interface ICategoriaService {
 
-  List<Categoria> getAll();
+  Page<Categoria> getAll(Pageable pageable);
 
   Categoria getById(Integer idCategoria);
 

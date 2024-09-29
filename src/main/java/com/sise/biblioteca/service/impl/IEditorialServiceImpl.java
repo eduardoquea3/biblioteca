@@ -5,8 +5,11 @@ import com.sise.biblioteca.repository.IEditorialRepository;
 import com.sise.biblioteca.service.IEditorialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
+
+
 
 @Service
 public class IEditorialServiceImpl implements IEditorialService {
@@ -15,8 +18,8 @@ public class IEditorialServiceImpl implements IEditorialService {
   private IEditorialRepository editorialRepository;
 
   @Override
-  public List<Editorial> getAll() {
-    return editorialRepository.findByEstado(true);
+  public Page<Editorial> getAll(Pageable pageable) {
+    return editorialRepository.findByEstado(true,pageable);
   }
 
   @Override

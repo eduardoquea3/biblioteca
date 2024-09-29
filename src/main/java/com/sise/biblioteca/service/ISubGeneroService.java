@@ -2,11 +2,14 @@ package com.sise.biblioteca.service;
 
 import com.sise.biblioteca.entities.SubGenero;
 
-import java.util.List;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+
 
 public interface ISubGeneroService {
 
-  List<SubGenero> getAll();
+  Page<SubGenero> getAll(Pageable pageable);
 
   SubGenero getById(Integer idSubGenero);
 

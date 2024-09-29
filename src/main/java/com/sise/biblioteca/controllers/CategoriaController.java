@@ -1,18 +1,24 @@
 package com.sise.biblioteca.controllers;
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import com.sise.biblioteca.entities.Categoria;
 import com.sise.biblioteca.service.ICategoriaService;
@@ -31,22 +37,22 @@ public class CategoriaController {
 
    @Operation(summary = "obtener todos las Categorias")
   @GetMapping("")
-  public ResponseEntity<BaseResponse> getCategorias() {
+public ResponseEntity<Page<Categoria>> getCategoria(
+      @RequestParam(defaultValue = "0") int page,
+
+      @RequestParam(defaultValue = "5") int size,
+
+      @RequestParam(required = false) String[] sortBy) {
+
     try {
-      List<Categoria> categorias = categoriaService.getAll();
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(categorias), HttpStatus.OK);
+      Pageable pageable = (sortBy != null) ? PageRequest.of(page, size, Sort.by(sortBy).ascending()) : PageRequest.of(page, size);
+
+      Page<Categoria> categoria = categoriaService.getAll(pageable);
+
+      return new ResponseEntity<>(categoria, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
-   @Operation(summary = "Agregar una Categoria")
-  @PostMapping("")
-  public ResponseEntity<BaseResponse> addCategoria(@RequestBody Categoria categoria) {
-    try {
-      categoriaService.add(categoria);
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(categoria), HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
     }
   }
    @Operation(summary="Actualizar Categoria")

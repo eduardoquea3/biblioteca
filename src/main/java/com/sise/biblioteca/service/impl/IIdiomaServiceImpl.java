@@ -6,7 +6,11 @@ import com.sise.biblioteca.service.IIdiomaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+
+
 
 @Service
 public class IIdiomaServiceImpl implements IIdiomaService {
@@ -15,8 +19,8 @@ public class IIdiomaServiceImpl implements IIdiomaService {
   private IIdiomaRepository idiomaRepository;
 
   @Override
-  public List<Idioma> getAll() {
-    return idiomaRepository.findByEstado(true);
+  public Page<Idioma> getAll(Pageable pageable) {
+    return idiomaRepository.findByEstado(true,pageable);
   }
 
   @Override

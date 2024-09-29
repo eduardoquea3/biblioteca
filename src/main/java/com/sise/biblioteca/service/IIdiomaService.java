@@ -2,11 +2,16 @@ package com.sise.biblioteca.service;
 
 import com.sise.biblioteca.entities.Idioma;
 
-import java.util.List;
+
+
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+
 
 public interface IIdiomaService {
 
-  List<Idioma> getAll();
+  Page<Idioma> getAll(Pageable pageable);
 
   Idioma getById(Integer idIdioma);
 

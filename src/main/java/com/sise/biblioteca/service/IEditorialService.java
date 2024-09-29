@@ -2,11 +2,14 @@ package com.sise.biblioteca.service;
 
 import com.sise.biblioteca.entities.Editorial;
 
-import java.util.List;
+
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 public interface IEditorialService {
 
-  List<Editorial> getAll();
+  Page<Editorial> getAll(Pageable pageable);
 
   Editorial getById(Integer idEditorial);
 

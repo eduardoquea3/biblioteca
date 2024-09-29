@@ -4,7 +4,9 @@ import com.sise.biblioteca.entities.SubGenero;
 
 import jakarta.transaction.Transactional;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,7 +16,7 @@ import org.springframework.data.repository.query.Param;
 public interface ISubGeneroRepository extends JpaRepository <SubGenero,Integer> {
 
 
-  List<SubGenero> findByEstado(boolean estado);
+  Page<SubGenero> findByEstado(boolean estado,Pageable pePageable);
 
   SubGenero findOneByIdSubgeneroAndEstado(Integer idSubgenero, boolean estado);
 

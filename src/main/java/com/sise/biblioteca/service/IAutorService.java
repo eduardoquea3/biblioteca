@@ -2,11 +2,13 @@ package com.sise.biblioteca.service;
 
 import com.sise.biblioteca.entities.Autor;
 
-import java.util.List;
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
 public interface IAutorService {
 
-  List<Autor> getAll();
+  Page<Autor> getAll(Pageable pageable);
 
   Autor getById(Integer idAutor);
 

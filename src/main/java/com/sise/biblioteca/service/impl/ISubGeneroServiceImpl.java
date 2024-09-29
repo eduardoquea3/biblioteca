@@ -5,8 +5,10 @@ import com.sise.biblioteca.repository.ISubGeneroRepository;
 import com.sise.biblioteca.service.ISubGeneroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
+
 
 @Service
 public class ISubGeneroServiceImpl implements ISubGeneroService {
@@ -15,8 +17,8 @@ public class ISubGeneroServiceImpl implements ISubGeneroService {
   private ISubGeneroRepository subGeneroRepository;
 
   @Override
-  public List<SubGenero> getAll() {
-    return subGeneroRepository.findByEstado(true);
+  public Page<SubGenero> getAll(Pageable pageable) {
+    return subGeneroRepository.findByEstado(true,pageable);
   }
 
   @Override

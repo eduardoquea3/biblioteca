@@ -1,9 +1,10 @@
 package com.sise.biblioteca.controllers;
 
-import java.util.List;
+
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.data.domain.Pageable;
 import com.sise.biblioteca.entities.Autor;
+
 import com.sise.biblioteca.service.IAutorService;
 import com.sise.biblioteca.shared.BaseResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,12 +37,22 @@ public class AutorController {
 
   @Operation(summary = "obtener todos los Autores")
   @GetMapping("")
-  public ResponseEntity<BaseResponse> listarAutores() {
+   public ResponseEntity<Page<Autor>> listarAutores(
+      @RequestParam(defaultValue = "0") int page,
+
+      @RequestParam(defaultValue = "5") int size,
+
+      @RequestParam(required = false) String[] sortBy) {
+
     try {
-      List<Autor> autores = autorService.getAll();
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(autores), HttpStatus.OK);
+      Pageable pageable = (sortBy != null) ? PageRequest.of(page, size, Sort.by(sortBy).ascending()) : PageRequest.of(page, size);
+
+      Page<Autor> autor = autorService.getAll(pageable);
+
+      return new ResponseEntity<>(autor, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
     }
   }
   @Operation(summary = "Agregar un nuevo Autor ")

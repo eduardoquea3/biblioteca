@@ -4,8 +4,10 @@ import com.sise.biblioteca.entities.Autor;
 
 import jakarta.transaction.Transactional;
 
-import java.util.List;
 
+
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +15,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface IAutorRespository extends JpaRepository<Autor, Integer> {
 
-  List<Autor> findByEstado(boolean estado);
+  Page<Autor> findByEstado(boolean estado,Pageable pageable);
 
   Autor findOneByIdAutorAndEstado(Integer idAutor, boolean estado);
 

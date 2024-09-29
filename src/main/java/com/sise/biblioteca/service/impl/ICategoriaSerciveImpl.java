@@ -5,8 +5,10 @@ import com.sise.biblioteca.repository.ICategoriaRepository;
 import com.sise.biblioteca.service.ICategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
+
 
 @Service
 public class ICategoriaSerciveImpl implements ICategoriaService {
@@ -15,8 +17,8 @@ public class ICategoriaSerciveImpl implements ICategoriaService {
   private ICategoriaRepository categoriaRepository;
 
   @Override
-  public List<Categoria> getAll() {
-    return categoriaRepository.findByEstado(true);
+  public Page<Categoria> getAll(Pageable pageable) {
+    return categoriaRepository.findByEstado(true,pageable);
   }
 
   @Override

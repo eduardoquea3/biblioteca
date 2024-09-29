@@ -1,8 +1,12 @@
 package com.sise.biblioteca.controllers;
 
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 
 import com.sise.biblioteca.entities.SubGenero;
 import com.sise.biblioteca.service.ISubGeneroService;
@@ -31,12 +37,22 @@ public class SubgenerosController {
 
   @Operation(summary = "obtener todos los SubGeneros")
   @GetMapping("")
-  public ResponseEntity<BaseResponse> getAll() {
+ public ResponseEntity<Page<SubGenero>> getSubGenero(
+      @RequestParam(defaultValue = "0") int page,
+
+      @RequestParam(defaultValue = "5") int size,
+
+      @RequestParam(required = false) String[] sortBy) {
+
     try {
-      List<SubGenero> subgeneros = subgeneroService.getAll();
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(subgeneros), HttpStatus.OK);
+      Pageable pageable = (sortBy != null) ? PageRequest.of(page, size, Sort.by(sortBy).ascending()) : PageRequest.of(page, size);
+
+      Page<SubGenero> subgenero = subgeneroService.getAll(pageable);
+
+      return new ResponseEntity<>(subgenero, HttpStatus.OK);
     } catch (Exception e) {
-      return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+      return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+
     }
   }
   @Operation(summary = "Agregar un SubGenero")

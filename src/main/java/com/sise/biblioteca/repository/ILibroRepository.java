@@ -1,6 +1,6 @@
 package com.sise.biblioteca.repository;
 
-import com.sise.biblioteca.entities.Libros;
+import com.sise.biblioteca.entities.Libro;
 
 import jakarta.transaction.Transactional;
 
@@ -17,17 +17,17 @@ import org.springframework.data.domain.Page;
 
 
 
-public interface ILibrosRepository extends JpaRepository<Libros,Integer> {
+public interface ILibroRepository extends JpaRepository<Libro,Integer> {
 
-  Page<Libros> findByEstado(boolean estado,Pageable pageable);
+  Page<Libro> findByEstado(boolean estado,Pageable pageable);
 
-  Libros findOneByIdLibroAndEstado(Integer idLibro, boolean estado);
+  Libro findOneByIdLibroAndEstado(Integer idLibro, boolean estado);
 
 
   
   @Transactional
   @Modifying
-  @Query("UPDATE Libros a SET a.estado = false WHERE a.idLibro = :idLibro")
+  @Query("UPDATE Libro a SET a.estado = false WHERE a.idLibro = :idLibro")
   void remove(@Param("idLibro") Integer idLibro);
 
 }

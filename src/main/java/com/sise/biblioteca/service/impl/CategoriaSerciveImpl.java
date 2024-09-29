@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 
 
 @Service
-public class ICategoriaSerciveImpl implements ICategoriaService {
+public class CategoriaSerciveImpl implements ICategoriaService {
 
   @Autowired
   private ICategoriaRepository categoriaRepository;

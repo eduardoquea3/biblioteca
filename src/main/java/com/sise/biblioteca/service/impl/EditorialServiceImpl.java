@@ -12,7 +12,7 @@ import org.springframework.data.domain.Page;
 
 
 @Service
-public class IEditorialServiceImpl implements IEditorialService {
+public class EditorialServiceImpl implements IEditorialService {
 
   @Autowired
   private IEditorialRepository editorialRepository;

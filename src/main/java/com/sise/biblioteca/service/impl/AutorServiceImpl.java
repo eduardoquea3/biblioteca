@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public class IAutorServiceImpl implements IAutorService {
+public class AutorServiceImpl implements IAutorService {
 
   @Autowired
   private IAutorRespository autorRespository;

@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 
 
 @Service
-public class ISubGeneroServiceImpl implements ISubGeneroService {
+public class SubGeneroServiceImpl implements ISubGeneroService {
 
   @Autowired
   private ISubGeneroRepository subGeneroRepository;

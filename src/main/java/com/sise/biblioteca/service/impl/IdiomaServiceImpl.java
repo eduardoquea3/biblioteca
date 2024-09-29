@@ -13,7 +13,7 @@ import org.springframework.data.domain.Page;
 
 
 @Service
-public class IIdiomaServiceImpl implements IIdiomaService {
+public class IdiomaServiceImpl implements IIdiomaService {
 
   @Autowired
   private IIdiomaRepository idiomaRepository;

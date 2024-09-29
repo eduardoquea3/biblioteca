@@ -1,7 +1,5 @@
 package com.sise.biblioteca.shared;
 
-import org.springframework.http.HttpStatus;
-
 import lombok.Getter;
 import lombok.Setter;
 

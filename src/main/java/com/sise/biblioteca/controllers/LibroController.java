@@ -3,23 +3,15 @@ package com.sise.biblioteca.controllers;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.sise.biblioteca.shared.BaseResponse;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
 import com.sise.biblioteca.entities.Libro;
 import com.sise.biblioteca.errors.ClientException;
 import com.sise.biblioteca.service.ILibroService;
-
-import org.hibernate.internal.ExceptionConverterImpl;
-import org.hibernate.internal.util.ExceptionHelper;
-import org.hibernate.jdbc.Expectations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;

@@ -8,7 +8,7 @@ POST {{URL}}/autores HTTP/1.1
 content-type: application/json
 
 {
-  "nombre": "Homero"
+  "nombre": "Homero II"
 }
 
 ###
@@ -111,7 +111,9 @@ content-type: application/json
 PATCH {{URL}}/editoriales/11
 
 ### Libros
-GET {{URL}}/libros HTTP/1.1
+GET {{URL}}/api/libros?page=1&size=5 HTTP/1.1
+###
+GET {{URL}}/api/libros?page=0&size=5&nombre=someName HTTP/1.1
 
 ###
 GET {{URL}}/libros/3 HTTP/1.1

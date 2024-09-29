@@ -3,10 +3,15 @@ package com.sise.biblioteca.service.impl;
 import com.sise.biblioteca.entities.Libros;
 import com.sise.biblioteca.repository.ILibrosRepository;
 import com.sise.biblioteca.service.ILibrosService;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+
+
 
 @Service
 public class ILibrosServiceImpl implements ILibrosService {
@@ -15,8 +20,8 @@ public class ILibrosServiceImpl implements ILibrosService {
   private ILibrosRepository libroRepository;
 
   @Override
-  public List<Libros> getAll() {
-    return libroRepository.findByEstado(true);
+  public Page<Libros> getAll(Pageable pageable) {
+    return libroRepository.findByEstado(true,pageable);
   }
 
   @Override

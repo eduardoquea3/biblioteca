@@ -2,7 +2,7 @@ package com.sise.biblioteca.controllers;
 
 import java.util.List;
 
-import org.springdoc.core.converters.models.Pageable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

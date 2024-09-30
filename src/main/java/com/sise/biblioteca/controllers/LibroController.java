@@ -34,7 +34,7 @@ public class LibroController {
   @Autowired
   private ILibroService libroService;
 
-  @Operation(summary = "obtener todos los libros")
+  @Operation(summary = "Obtener todos los libros")
   @GetMapping("")
   public ResponseEntity<BaseResponse> listarLibros(
       @RequestParam(defaultValue = "0") int page,
@@ -53,33 +53,34 @@ public class LibroController {
     return new ResponseEntity<>(BaseResponse.success(libros), HttpStatus.OK);
   }
 
-  @Operation(summary = "obtener libro mediante id")
+  @Operation(summary = "Obtener libro mediante id")
   @GetMapping("/{idLibro}")
   public ResponseEntity<BaseResponse> getById(@PathVariable Integer idLibro) throws ClientException {
     Libro libro = libroService.getById(idLibro);
     return new ResponseEntity<BaseResponse>(BaseResponse.success(libro), HttpStatus.OK);
   }
 
-  @Operation(summary = "agregar un nuevo libro")
+  @Operation(summary = "Agregar libro")
   @PostMapping("")
   public ResponseEntity<BaseResponse> add(@RequestBody Libro libro) {
-    libroService.add(libro);
+    libro = libroService.add(libro);
     return new ResponseEntity<BaseResponse>(BaseResponse.success(libro), HttpStatus.CREATED);
 
   }
 
-  @Operation(summary = "actualizar un libro mediante su id")
+  @Operation(summary = "Actualizar libro")
   @PutMapping("/{idLibro}")
-  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idLibro, @RequestBody Libro libro) throws ClientException {
-      Libro newLibro = libroService.edit(idLibro, libro);
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(newLibro), HttpStatus.OK);
+  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idLibro, @RequestBody Libro libro)
+      throws ClientException {
+    Libro newLibro = libroService.edit(idLibro, libro);
+    return new ResponseEntity<BaseResponse>(BaseResponse.success(newLibro), HttpStatus.OK);
   }
 
-  @Operation(summary = "eliminar logicamente un libro mediante el usuario")
+  @Operation(summary = "Eliminar logicamente un libro")
   @PatchMapping("/{idLibro}")
   public ResponseEntity<BaseResponse> remove(@PathVariable Integer idLibro) throws ClientException {
-      libroService.remove(idLibro);
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.NO_CONTENT);
+    libroService.remove(idLibro);
+    return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.NO_CONTENT);
   }
 
 }

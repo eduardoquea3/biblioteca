@@ -1,7 +1,5 @@
 package com.sise.biblioteca.controllers;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.sise.biblioteca.entities.SubGenero;
+import com.sise.biblioteca.errors.ClientException;
 import com.sise.biblioteca.service.ISubGeneroService;
 import com.sise.biblioteca.shared.BaseResponse;
 
@@ -29,69 +27,51 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/subgeneros")
-@Tag(name = "subgeneros")
+@Tag(name = "Subgeneros")
 public class SubgenerosController {
 
   @Autowired
   private ISubGeneroService subgeneroService;
 
-  @Operation(summary = "obtener todos los SubGeneros")
+  @Operation(summary = "Obtener todos los subgeneros")
   @GetMapping("")
- public ResponseEntity<Page<SubGenero>> getSubGenero(
+  public ResponseEntity<BaseResponse> getSubGenero(
       @RequestParam(defaultValue = "0") int page,
 
       @RequestParam(defaultValue = "5") int size,
 
       @RequestParam(required = false) String[] sortBy) {
 
-    try {
-      Pageable pageable = (sortBy != null) ? PageRequest.of(page, size, Sort.by(sortBy).ascending()) : PageRequest.of(page, size);
+    Sort sort = Sort.unsorted();
+    if (sortBy != null)
+      sort = sort.and(Sort.by(sortBy));
 
-      Page<SubGenero> subgenero = subgeneroService.getAll(pageable);
+    Pageable pageable = PageRequest.of(page, size, sort);
+    Page<SubGenero> subgeneros = subgeneroService.getAll(pageable);
 
-      return new ResponseEntity<>(subgenero, HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-
-    }
+    return new ResponseEntity<>(BaseResponse.success(subgeneros), HttpStatus.OK);
   }
-  @Operation(summary = "Agregar un SubGenero")
+
+  @Operation(summary = "Agregar subgenero")
   @PostMapping("")
   public ResponseEntity<BaseResponse> add(@RequestBody SubGenero subgenero) {
-    try {
-      subgeneroService.add(subgenero);
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(subgenero), HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    subgenero = subgeneroService.add(subgenero);
+    return new ResponseEntity<BaseResponse>(BaseResponse.success(subgenero), HttpStatus.CREATED);
   }
-  @Operation(summary = "Actualizar  SubGenero")
 
+  @Operation(summary = "Actualizar subgenero")
   @PutMapping("/{idSubgenero}")
-  // change type class
-  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idSubgenero, @RequestBody SubGenero subgenero) {
-    try {
-      if (subgeneroService.getById(idSubgenero) == null)
-        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
-      subgenero.setIdSubgenero(idSubgenero);
-      subgeneroService.edit(subgenero);
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(subgenero), HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idSubgenero, @RequestBody SubGenero subgenero)
+      throws ClientException {
+    SubGenero newSubGenero = subgeneroService.edit(idSubgenero, subgenero);
+    return new ResponseEntity<BaseResponse>(BaseResponse.success(newSubGenero), HttpStatus.OK);
   }
-  @Operation(summary = "Eliminar logicamente SubGenero")
 
+  @Operation(summary = "Eliminar logicamente un subgenero")
   @PatchMapping("/{idSubgenero}")
-  public ResponseEntity<BaseResponse> remove(@PathVariable Integer idSubgenero) {
-    try {
-      if (subgeneroService.getById(idSubgenero) == null)
-        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
-      subgeneroService.remove(idSubgenero);
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(idSubgenero), HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  public ResponseEntity<BaseResponse> remove(@PathVariable Integer idSubgenero) throws ClientException {
+    subgeneroService.remove(idSubgenero);
+    return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.NO_CONTENT);
   }
 
 }

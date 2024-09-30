@@ -39,6 +39,7 @@ public class SubGeneroServiceImpl implements ISubGeneroService {
     SubGenero subgenero = subGeneroRepository.findOneByIdSubgeneroAndEstado(id, true);
     if (subgenero == null)
       throw new ClientException("El subgenero no existe!", HttpStatus.NOT_FOUND);
+    newSubGenero.setIdSubgenero(id);
     subgenero = subGeneroRepository.save(newSubGenero);
     return subgenero;
   }

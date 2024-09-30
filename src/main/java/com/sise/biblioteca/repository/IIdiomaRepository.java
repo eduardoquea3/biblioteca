@@ -4,9 +4,6 @@ import com.sise.biblioteca.entities.Idioma;
 
 import jakarta.transaction.Transactional;
 
-
-
-
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 
@@ -17,7 +14,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface IIdiomaRepository extends JpaRepository<Idioma, Integer> {
 
-  Page<Idioma> findByEstado(boolean estado,Pageable pageable);
+  Page<Idioma> findByEstado(boolean estado, Pageable pageable);
 
   Idioma findOneByIdIdiomaAndEstado(Integer idIdioma, boolean estado);
 

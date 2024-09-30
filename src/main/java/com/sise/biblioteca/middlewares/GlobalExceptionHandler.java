@@ -10,13 +10,13 @@ import com.sise.biblioteca.shared.BaseResponse;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(ClientException.class)
-    public ResponseEntity<BaseResponse> handleClientException(ClientException e){
-        return new ResponseEntity<>(BaseResponse.error(e.getMessage()), e.geStatusCode());
-    }
+  @ExceptionHandler(ClientException.class)
+  public ResponseEntity<BaseResponse> handleClientException(ClientException e) {
+    return new ResponseEntity<>(BaseResponse.error(e.getMessage()), e.geStatusCode());
+  }
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<BaseResponse> handleGlobalException(Exception e){
-        return new ResponseEntity<>(BaseResponse.error("Unexpected error!"), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<BaseResponse> handleGlobalException(Exception e) {
+    return new ResponseEntity<>(BaseResponse.error("Unexpected error!"), HttpStatus.INTERNAL_SERVER_ERROR);
+  }
 }

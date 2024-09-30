@@ -6,9 +6,6 @@ import org.springframework.data.domain.Page;
 import com.sise.biblioteca.entities.Libro;
 import com.sise.biblioteca.errors.ClientException;
 
-
-
-
 public interface ILibroService {
 
   Page<Libro> getAll(Pageable pageable);

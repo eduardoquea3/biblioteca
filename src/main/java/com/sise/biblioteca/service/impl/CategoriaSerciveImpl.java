@@ -40,6 +40,7 @@ public class CategoriaSerciveImpl implements ICategoriaService {
     Categoria categoria = categoriaRepository.findOneByIdCategoriaAndEstado(id, true);
     if (categoria == null)
       throw new ClientException("La categoria no existe", HttpStatus.NOT_FOUND);
+    newCategoria.setIdCategoria(id);
     categoria = categoriaRepository.save(newCategoria);
     return categoria;
   }

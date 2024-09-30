@@ -40,6 +40,7 @@ public class AutorServiceImpl implements IAutorService {
     Autor autor = autorRespository.findOneByIdAutorAndEstado(id, true);
     if (autor == null)
       throw new ClientException("El autor no existe", HttpStatus.NOT_FOUND);
+    newAutor.setIdAutor(id);
     autor = autorRespository.save(newAutor);
     return autor;
   }

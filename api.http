@@ -34,7 +34,7 @@ PATCH {{URL}}/autores/26
 
 //paginacion y ordenamiento
 ###
-GET {{URL}}/categorias?page=0&size=5 HTTP/1.1
+GET {{URL}}/categorias?page=0&size=10 HTTP/1.1
 ###
 GET {{URL}}/categorias?page=0&size=5&sortBy=nombre  HTTP/1.1
 
@@ -153,6 +153,8 @@ PATCH {{URL}}/editoriales/11
 ### Libros
 GET {{URL}}/libros?page=0&size=5 HTTP/1.1
 ###
+GET {{URL}}/libros HTTP/1.1
+###
 GET {{URL}}/libros?page=0&size=5&sortBy=nombre  HTTP/1.1
 
 
@@ -218,3 +220,5 @@ content-type: application/json
 
 ###
 PATCH {{URL}}/libros/28
+###
+GET {{URL}}/libros/3

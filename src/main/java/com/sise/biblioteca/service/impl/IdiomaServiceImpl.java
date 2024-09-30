@@ -41,8 +41,9 @@ public class IdiomaServiceImpl implements IIdiomaService {
     Idioma idioma = idiomaRepository.findOneByIdIdiomaAndEstado(id, true);
     if (idioma == null)
       throw new ClientException("El idioma no existe", HttpStatus.NOT_FOUND);
+    newIdioma.setIdIdioma(id);
     idioma = idiomaRepository.save(newIdioma);
-    return idioma;
+    return null;
   }
 
   @Override

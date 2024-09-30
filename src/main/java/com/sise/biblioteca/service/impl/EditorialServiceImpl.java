@@ -40,6 +40,7 @@ public class EditorialServiceImpl implements IEditorialService {
     Editorial editorial = editorialRepository.findOneByIdEditorialAndEstado(id, true);
     if (editorial == null)
       throw new ClientException("La editorial no existe!", HttpStatus.NOT_FOUND);
+    newEditorial.setIdEditorial(id);
     editorial = editorialRepository.save(newEditorial);
     return editorial;
   }

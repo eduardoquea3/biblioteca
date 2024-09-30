@@ -23,9 +23,11 @@ import com.sise.biblioteca.service.IEditorialService;
 import com.sise.biblioteca.shared.BaseResponse;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/editoriales")
+@Tag(name = "Editoriales")
 public class EditorialController {
 
   @Autowired

@@ -1,7 +1,5 @@
 package com.sise.biblioteca.controllers;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.sise.biblioteca.entities.Editorial;
+import com.sise.biblioteca.errors.ClientException;
 import com.sise.biblioteca.service.IEditorialService;
 import com.sise.biblioteca.shared.BaseResponse;
 
@@ -33,65 +31,45 @@ public class EditorialController {
   @Autowired
   private IEditorialService editorialService;
 
-   @Operation(summary = "obtener todos las Editoriales")
+  @Operation(summary = "obtener todos las editoriales")
   @GetMapping("")
-  public ResponseEntity<Page<Editorial>> getEditorial(
+  public ResponseEntity<BaseResponse> getEditorial(
       @RequestParam(defaultValue = "0") int page,
 
       @RequestParam(defaultValue = "5") int size,
 
       @RequestParam(required = false) String[] sortBy) {
 
-    try {
-      Pageable pageable = (sortBy != null) ? PageRequest.of(page, size, Sort.by(sortBy).ascending()) : PageRequest.of(page, size);
+    Sort sort = Sort.unsorted();
+    if (sortBy != null)
+      sort = sort.and(Sort.by(sortBy));
 
-      Page<Editorial> editorial = editorialService.getAll(pageable);
+    Pageable pageable = PageRequest.of(page, size, sort);
+    Page<Editorial> editoriales = editorialService.getAll(pageable);
 
-      return new ResponseEntity<>(editorial, HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-
-    }
+    return new ResponseEntity<>(BaseResponse.success(editoriales), HttpStatus.OK);
   }
 
-  @Operation(summary = "Agregar Editoriales")
-
+  @Operation(summary = "Agregar editorial")
   @PostMapping("")
   public ResponseEntity<BaseResponse> add(@RequestBody Editorial editorial) {
-    try {
-      editorialService.add(editorial);
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(editorial), HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    editorial = editorialService.add(editorial);
+    return new ResponseEntity<BaseResponse>(BaseResponse.success(editorial), HttpStatus.CREATED);
   }
 
-  @Operation(summary = "Actualizar Editorial")
-
+  @Operation(summary = "Actualizar editorial")
   @PutMapping("/{idEditorial}")
-  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idEditorial, @RequestBody Editorial editorial) {
-    try {
-      if (editorialService.getById(idEditorial) == null)
-        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
-      editorial.setIdEditorial(idEditorial);
-      editorialService.edit(editorial);
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(editorial), HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idEditorial, @RequestBody Editorial editorial)
+      throws ClientException {
+    Editorial newEditorial = editorialService.edit(idEditorial, editorial);
+    return new ResponseEntity<BaseResponse>(BaseResponse.success(newEditorial), HttpStatus.OK);
   }
 
-  @Operation(summary = "Eliminar logicamente Editorial")
+  @Operation(summary = "Eliminar logicamente una editorial")
   @PatchMapping("/{idEditorial}")
-  public ResponseEntity<BaseResponse> remove(@PathVariable Integer idEditorial) {
-    try {
-      if (editorialService.getById(idEditorial) == null)
-        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
-      editorialService.remove(idEditorial);
-      return new ResponseEntity<>(BaseResponse.success(), HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  public ResponseEntity<BaseResponse> remove(@PathVariable Integer idEditorial) throws ClientException {
+    editorialService.remove(idEditorial);
+    return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.NO_CONTENT);
   }
 
 }

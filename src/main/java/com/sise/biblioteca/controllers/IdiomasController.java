@@ -1,6 +1,5 @@
 package com.sise.biblioteca.controllers;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.sise.biblioteca.entities.Idioma;
+import com.sise.biblioteca.errors.ClientException;
 import com.sise.biblioteca.service.IIdiomaService;
 import com.sise.biblioteca.shared.BaseResponse;
 
@@ -34,63 +33,46 @@ public class IdiomasController {
   @Autowired
   private IIdiomaService idiomaService;
 
-  @Operation(summary = "obtener todos los Idiomas")
+  @Operation(summary = "obtener todos los idiomas")
   @GetMapping("")
- public ResponseEntity<Page<Idioma>> getEdioma(
+  public ResponseEntity<BaseResponse> getEdioma(
       @RequestParam(defaultValue = "0") int page,
 
       @RequestParam(defaultValue = "5") int size,
 
       @RequestParam(required = false) String[] sortBy) {
 
-    try {
-      Pageable pageable = (sortBy != null) ? PageRequest.of(page, size, Sort.by(sortBy).ascending()) : PageRequest.of(page, size);
+    Sort sort = Sort.unsorted();
+    if (sortBy != null)
+      sort = sort.and(Sort.by(sortBy));
 
-      Page<Idioma> idioma = idiomaService.getAll(pageable);
+    Pageable pageable = PageRequest.of(page, size, sort);
+    Page<Idioma> idiomas = idiomaService.getAll(pageable);
 
-      return new ResponseEntity<>(idioma, HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-
-    }
+    return new ResponseEntity<>(BaseResponse.success(idiomas), HttpStatus.OK);
   }
 
-  @Operation(summary = "Agregar Idioma")
+  @Operation(summary = "Agregar idioma")
   @PostMapping("")
   public ResponseEntity<BaseResponse> add(@RequestBody Idioma idioma) {
-    try {
-      idiomaService.add(idioma);
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(idioma), HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
-  @Operation(summary = "Actualizar Idioma")
-  @PutMapping("/{idIdioma}")
-  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idIdioma, @RequestBody Idioma idioma) {
-    try {
-      if (idiomaService.getById(idIdioma) == null)
-        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
-      idioma.setIdIdioma(idIdioma);
-      idiomaService.edit(idioma);
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    idioma = idiomaService.add(idioma);
+    return new ResponseEntity<BaseResponse>(BaseResponse.success(idioma), HttpStatus.CREATED);
   }
 
-  @Operation(summary = "Eliminar logicamente Idioma")
+  @Operation(summary = "Actualizar idioma")
+  @PutMapping("/{idIdioma}")
+  public ResponseEntity<BaseResponse> edit(@PathVariable Integer idIdioma, @RequestBody Idioma idioma)
+      throws ClientException {
+    Idioma newIdioma = idiomaService.edit(idIdioma, idioma);
+    return new ResponseEntity<BaseResponse>(BaseResponse.success(newIdioma), HttpStatus.OK);
+  }
+
+  @Operation(summary = "Eliminar logicamente un idioma")
 
   @PatchMapping("/{idIdioma}")
-  public ResponseEntity<BaseResponse> remove(@PathVariable Integer idIdioma) {
-    try {
-      if (idiomaService.getById(idIdioma) == null)
-        return new ResponseEntity<>(BaseResponse.errorNotFound(), HttpStatus.NOT_FOUND);
-      idiomaService.remove(idIdioma);
-      return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<BaseResponse>(BaseResponse.error(e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+  public ResponseEntity<BaseResponse> remove(@PathVariable Integer idIdioma) throws ClientException {
+    idiomaService.remove(idIdioma);
+    return new ResponseEntity<>(BaseResponse.success(), HttpStatus.NO_CONTENT);
   }
 
 }

@@ -1,6 +1,6 @@
 package com.sise.biblioteca.service.impl;
 
-import com.sise.biblioteca.entities.Autor;
+
 import com.sise.biblioteca.entities.Categoria;
 import com.sise.biblioteca.errors.ClientException;
 import com.sise.biblioteca.repository.ICategoriaRepository;

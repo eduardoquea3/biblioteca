@@ -4,10 +4,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.sise.biblioteca.shared.BaseResponse;
+import com.sise.biblioteca.shared.ValidateSort;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
+import com.sise.biblioteca.dto.Libro.CreateLibroDTO;
 import com.sise.biblioteca.entities.Libro;
 import com.sise.biblioteca.errors.ClientException;
+import com.sise.biblioteca.mappers.LibroMapper;
 import com.sise.biblioteca.service.ILibroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -41,15 +47,18 @@ public class LibroController {
 
       @RequestParam(defaultValue = "5") int size,
 
-      @RequestParam(required = false) String[] sortBy) {
+      @RequestParam(required = false) String[] sortBy) throws ClientException
 
+  {
     Sort sort = Sort.unsorted();
-    if (sortBy != null)
+    
+    if (sortBy != null){
+      ValidateSort.Validate(sortBy, Libro.class);
       sort = sort.and(Sort.by(sortBy));
+    }
 
     Pageable pageable = PageRequest.of(page, size, sort);
     Page<Libro> libros = libroService.getAll(pageable);
-
     return new ResponseEntity<>(BaseResponse.success(libros), HttpStatus.OK);
   }
 
@@ -62,7 +71,8 @@ public class LibroController {
 
   @Operation(summary = "Agregar libro")
   @PostMapping("")
-  public ResponseEntity<BaseResponse> add(@RequestBody Libro libro) {
+  public ResponseEntity<BaseResponse> add(@Valid @RequestBody CreateLibroDTO dto) {
+    Libro libro = LibroMapper.createDtoToLibro(dto);
     libro = libroService.add(libro);
     return new ResponseEntity<BaseResponse>(BaseResponse.success(libro), HttpStatus.CREATED);
 

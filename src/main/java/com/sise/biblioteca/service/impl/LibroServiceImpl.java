@@ -38,8 +38,7 @@ public class LibroServiceImpl implements ILibroService {
   @Override
   public Libro edit(Integer id, Libro newLibro) throws ClientException {
     Libro libro = libroRepository.findOneByIdLibroAndEstado(id, true);
-    if (libro == null)
-      throw new ClientException("El libro no existe", HttpStatus.NOT_FOUND);
+    if (libro == null) throw new ClientException("El libro no existe", HttpStatus.NOT_FOUND);
     newLibro.setIdLibro(id);
     libro = libroRepository.save(newLibro);
     return libro;

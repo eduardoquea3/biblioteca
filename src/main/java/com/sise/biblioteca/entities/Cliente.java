@@ -2,8 +2,6 @@ package com.sise.biblioteca.entities;
 
 import java.sql.Date;
 
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -19,36 +17,34 @@ import lombok.Data;
 @Table(name = "clientes")
 public class Cliente {
 
-      @Id
-      @Column(name = "idcliente")
-      @GeneratedValue(strategy =GenerationType.IDENTITY)
-      private Integer idCliente;
-      
-      @Column(name="dni")
-      private Integer dni;
+  @Id
+  @Column(name = "idcliente")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer idCliente;
 
-      @Column(name = "nombres")
-      private String nombre;
+  @Column(name = "dni")
+  private Integer dni;
 
-       @Column(name = "apellidos")
-      private String apellido;
-      
-      
-      private String Telefono;
+  @Column(name = "nombres")
+  private String nombre;
 
-      private String correo;
+  @Column(name = "apellidos")
+  private String apellido;
 
-      private String direccion;
-      
-      @Column(name = "fechanacimiento")
-      private Date fecha;
-       
+  @Column(name = "telefono")
+  private String Telefono;
 
-      @Column(name = "estadoauditoria",insertable = false,updatable = false)
-      @JsonIgnore
-      private boolean estado;
+  @Column(name = "correo")
+  private String correo;
 
+  @Column(name = "direccion")
+  private String direccion;
 
+  @Column(name = "fechanacimiento")
+  private Date fecha;
 
-      
+  @Column(name = "estadoauditoria", insertable = false, updatable = false)
+  @JsonIgnore
+  private boolean estado;
+
 }

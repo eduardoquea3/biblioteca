@@ -14,6 +14,7 @@ public class Editorial {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer idEditorial;
 
+  @Column(name = "nombre")
   private String nombre;
 
   @Column(name = "estadoauditoria", insertable = false, updatable = false)

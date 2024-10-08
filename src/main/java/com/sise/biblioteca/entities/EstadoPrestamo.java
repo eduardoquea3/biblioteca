@@ -14,15 +14,15 @@ import lombok.Data;
 @Entity
 @Table(name = "estadoprestamos")
 public class EstadoPrestamo {
-      @Id
-      @Column(name = "idestado", insertable = false, updatable = false)
-      @GeneratedValue(strategy = GenerationType.IDENTITY)
-      private Integer idEstadoPrestamo;
+  @Id
+  @Column(name = "idestado", insertable = false, updatable = false)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer idEstadoPrestamo;
 
-      @Column(name = "nombre")
-      private String nombre;
-    
-      @Column(name="estadoauditoria",insertable = false,updatable = false)
-      @JsonIgnore
-      private boolean estado;
+  @Column(name = "nombre")
+  private String nombre;
+
+  @Column(name = "estadoauditoria", insertable = false, updatable = false)
+  @JsonIgnore
+  private boolean estado;
 }

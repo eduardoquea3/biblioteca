@@ -1,7 +1,5 @@
 package com.sise.biblioteca.entities;
 
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -20,29 +18,28 @@ import lombok.Data;
 @Table(name = "detalleprestamos")
 public class DetallePrestamo {
 
-      @Id
-      @Column(name="iddetalleprestamo",insertable = false,updatable = false)
-      @GeneratedValue(strategy = GenerationType.IDENTITY)
-      private Integer idDetallePrestamo;
+  @Id
+  @Column(name = "iddetalleprestamo", insertable = false, updatable = false)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer idDetallePrestamo;
 
-      @ManyToOne
-      @JoinColumn(name = "idprestamo",nullable = false)
-      private Prestamo prestamo;
+  @ManyToOne
+  @JoinColumn(name = "idprestamo", nullable = false)
+  private Prestamo prestamo;
 
-      @ManyToOne
-      @JoinColumn(name = "idlibro")
-      private Libro libro;
+  @ManyToOne
+  @JoinColumn(name = "idlibro")
+  private Libro libro;
 
-      @ManyToOne
-      @JoinColumn(name = "idestado")
-      private EstadoPrestamo estadoPrestamo;
-      
-      @Column(name = "unidades")
-      private Integer unidades;
-     
-      @Column(name = "estadoautidoria" ,insertable = false,updatable = false)
-      @JsonIgnore
-      private boolean estado;
+  @ManyToOne
+  @JoinColumn(name = "idestado")
+  private EstadoPrestamo estadoPrestamo;
 
-      
+  @Column(name = "unidades")
+  private Integer unidades;
+
+  @Column(name = "estadoautidoria", insertable = false, updatable = false)
+  @JsonIgnore
+  private boolean estado;
+
 }

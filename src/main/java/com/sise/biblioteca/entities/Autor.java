@@ -22,6 +22,9 @@ public class Autor {
   @Column(name = "nombre")
   private String nombre;
 
+  @Column(name = "nacionalidad")
+  private String nacionalidad;
+
   @Column(name = "estadoauditoria", insertable = false, updatable = false)
   @JsonIgnore
   private boolean estado;

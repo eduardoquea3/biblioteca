@@ -16,24 +16,23 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="devoluciones")
+@Table(name = "devoluciones")
 public class Devolucion {
 
   @Id
-  @Column(name = "iddevolucion",insertable = false,updatable = false)
-  @GeneratedValue(strategy =GenerationType.IDENTITY )
+  @Column(name = "iddevolucion", insertable = false, updatable = false)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer idDevolucion;
-   
-   @OneToOne
-   @JoinColumn(name="iddetalleprestamo")
-   private DetallePrestamo detallePrestamo;
+
+  @OneToOne
+  @JoinColumn(name = "iddetalleprestamo")
+  private DetallePrestamo detallePrestamo;
 
   @Column(name = "fechadevolucion")
   private Date FechaDevolucion;
 
-  @Column(name = "estadoauditoria",insertable = false,updatable = false)
+  @Column(name = "estadoauditoria", insertable = false, updatable = false)
   @JsonIgnore
   private boolean estado;
 
-      
 }

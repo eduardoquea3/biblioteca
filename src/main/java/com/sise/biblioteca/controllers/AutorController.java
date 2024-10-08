@@ -18,7 +18,6 @@ import org.springframework.data.domain.Pageable;
 
 import com.sise.biblioteca.dto.Autor.CreateAutorDTO;
 import com.sise.biblioteca.entities.Autor;
-import com.sise.biblioteca.entities.SubGenero;
 import com.sise.biblioteca.errors.ClientException;
 import com.sise.biblioteca.mappers.AutorMapper;
 import com.sise.biblioteca.service.IAutorService;

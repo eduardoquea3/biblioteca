@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sise.biblioteca.entities.Idioma;
 import com.sise.biblioteca.entities.SubGenero;
 import com.sise.biblioteca.errors.ClientException;
 import com.sise.biblioteca.service.ISubGeneroService;
@@ -45,7 +44,7 @@ public class SubgenerosController {
       @RequestParam(required = false) String[] sortBy) throws ClientException {
 
     Sort sort = Sort.unsorted();
-    
+
     if (sortBy != null){
       ValidateSort.Validate(sortBy, SubGenero.class);
       sort = sort.and(Sort.by(sortBy));

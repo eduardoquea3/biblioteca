@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sise.biblioteca.entities.Editorial;
-import com.sise.biblioteca.entities.SubGenero;
 import com.sise.biblioteca.errors.ClientException;
 import com.sise.biblioteca.service.IEditorialService;
 import com.sise.biblioteca.shared.BaseResponse;
@@ -45,7 +44,7 @@ public class EditorialController {
       @RequestParam(required = false) String[] sortBy) throws ClientException {
 
     Sort sort = Sort.unsorted();
-    
+
     if (sortBy != null){
       ValidateSort.Validate(sortBy, Editorial.class);
       sort = sort.and(Sort.by(sortBy));

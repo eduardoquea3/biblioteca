@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sise.biblioteca.entities.Idioma;
-import com.sise.biblioteca.entities.Libro;
 import com.sise.biblioteca.errors.ClientException;
 import com.sise.biblioteca.service.IIdiomaService;
 import com.sise.biblioteca.shared.BaseResponse;

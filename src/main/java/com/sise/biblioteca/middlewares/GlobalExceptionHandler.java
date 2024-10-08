@@ -9,7 +9,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import com.fasterxml.jackson.databind.JsonSerializable.Base;
 import com.sise.biblioteca.errors.ClientException;
 import com.sise.biblioteca.shared.BaseResponse;
 

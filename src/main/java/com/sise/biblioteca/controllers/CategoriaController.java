@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sise.biblioteca.dto.Categoria.CreateCategoriaDTO;
 import com.sise.biblioteca.entities.Categoria;
-import com.sise.biblioteca.entities.SubGenero;
 import com.sise.biblioteca.errors.ClientException;
 import com.sise.biblioteca.mappers.CategoriaMapper;
 import com.sise.biblioteca.service.ICategoriaService;

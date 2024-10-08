@@ -206,3 +206,75 @@ content-type: application/json
 PATCH {{URL}}/libros/28
 ###
 GET {{URL}}/libros/3
+
+
+###
+GET {{URL}}/clientes HTTP/1.1
+
+###
+GET {{URL}}/clientes?page=0&size=5&sortBy=idCliente HTTP/1.1
+
+###
+POST {{URL}}/clientes HTTP/1.1
+content-type: application/json
+
+{
+  "dni": "71558974",
+  "nombre": "Nelson",   
+  "apellido": "Arango",  
+  "telefono": "965812458",
+  "correo": "NelsonArango@gmail.com",
+  "direccion": "av.Arquipa",
+  "fecha": "2000-01-20"  
+}
+
+###
+PUT {{URL}}/clientes/5 HTTP/1.1
+content-type: application/json
+
+{
+  "dni": "20214545",
+  "nombre": "Juan Carlos",   
+  "apellido": "Garcia",  
+  "telefono": "965874458",
+  "correo": "JuanGarcia14@gmail.com",
+  "direccion": "av.los Heroes",
+  "fecha": "1999-01-12"  
+}
+###
+PATCH {{URL}}/clientes/8
+
+###
+GET {{URL}}/prestamos HTTP/1.1
+
+###
+GET {{URL}}/prestamos?page=0&size=5&sortBy=idprestamo HTTP/1.1
+
+###
+
+POST {{URL}}/prestamos HTTP/1.1
+content-type: application/json
+
+{
+  "cliente": {
+    "idCliente": 4
+  },
+  "cantidad": 5,
+  "fechaPrestamo": "2024-10-12",
+  "fechaDevolucion": "2024-10-20"
+
+}
+
+###
+PUT {{URL}}/prestamos/4 HTTP/1.1
+content-type: application/json
+
+{
+  "cliente": {
+    "idCliente": 4
+  },
+  "cantidad": 5,
+  "fechaPrestamo": "2024-10-13",
+  "fechaDevolucion": "2024-10-25"
+
+}

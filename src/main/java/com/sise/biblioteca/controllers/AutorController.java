@@ -15,10 +15,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Pageable;
+
+import com.sise.biblioteca.dto.Autor.CreateAutorDTO;
 import com.sise.biblioteca.entities.Autor;
+import com.sise.biblioteca.entities.SubGenero;
 import com.sise.biblioteca.errors.ClientException;
+import com.sise.biblioteca.mappers.AutorMapper;
 import com.sise.biblioteca.service.IAutorService;
 import com.sise.biblioteca.shared.BaseResponse;
+import com.sise.biblioteca.shared.ValidateSort;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.config.EnableSpringDataWebSupport;
@@ -26,6 +32,7 @@ import org.springframework.data.web.config.EnableSpringDataWebSupport.PageSerial
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/autores")
@@ -43,11 +50,13 @@ public class AutorController {
 
       @RequestParam(defaultValue = "5") int size,
 
-      @RequestParam(required = false) String[] sortBy) {
+      @RequestParam(required = false) String[] sortBy) throws ClientException {
 
     Sort sort = Sort.unsorted();
-    if (sortBy != null)
-      sort = sort.and(Sort.by((sortBy)));
+    if (sortBy != null){
+      ValidateSort.Validate(sortBy, Autor.class);
+      sort = sort.and(Sort.by(sortBy));
+    }
 
     Pageable pageable = PageRequest.of(page, size, sort);
     Page<Autor> autores = autorService.getAll(pageable);
@@ -57,7 +66,8 @@ public class AutorController {
 
   @Operation(summary = "Agregar autor ")
   @PostMapping("")
-  public ResponseEntity<BaseResponse> addAutor(@RequestBody Autor autor) {
+  public ResponseEntity<BaseResponse> addAutor(@Valid @RequestBody CreateAutorDTO autorDTO) {
+    Autor autor = AutorMapper.createDtoToAutor(autorDTO);
     autor = autorService.add(autor);
     return new ResponseEntity<>(BaseResponse.success(autor), HttpStatus.CREATED);
   }
@@ -76,5 +86,4 @@ public class AutorController {
     autorService.remove(idAutor);
     return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.NO_CONTENT);
   }
-
 }

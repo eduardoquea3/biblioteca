@@ -17,13 +17,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sise.biblioteca.dto.Categoria.CreateCategoriaDTO;
 import com.sise.biblioteca.entities.Categoria;
+import com.sise.biblioteca.entities.SubGenero;
 import com.sise.biblioteca.errors.ClientException;
+import com.sise.biblioteca.mappers.CategoriaMapper;
 import com.sise.biblioteca.service.ICategoriaService;
 import com.sise.biblioteca.shared.BaseResponse;
+import com.sise.biblioteca.shared.ValidateSort;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/categorias")
@@ -33,6 +38,9 @@ public class CategoriaController {
   @Autowired
   private ICategoriaService categoriaService;
 
+
+    /*********************** LISTAR CATEGORIAS ****************************/
+
   @Operation(summary = "Obtener todos las categorias")
   @GetMapping("")
   public ResponseEntity<BaseResponse> getCategoria(
@@ -40,24 +48,30 @@ public class CategoriaController {
 
       @RequestParam(defaultValue = "5") int size,
 
-      @RequestParam(required = false) String[] sortBy) {
+      @RequestParam(required = false) String[] sortBy) throws ClientException {
 
     Sort sort = Sort.unsorted();
-    if (sortBy != null)
+    if (sortBy != null){
+      ValidateSort.Validate(sortBy, Categoria.class);
       sort = sort.and(Sort.by(sortBy));
+    }
 
     Pageable pageable = PageRequest.of(page, size, sort);
     Page<Categoria> categorias = categoriaService.getAll(pageable);
     return new ResponseEntity<>(BaseResponse.success(categorias), HttpStatus.OK);
   }
 
+  /*********************** AGREGAR CATEGORIA ****************************/
   @Operation(summary = "Agregar categoria")
   @PostMapping("")
-  public ResponseEntity<BaseResponse> add(@RequestBody Categoria categoria) {
+  public ResponseEntity<BaseResponse> add(@Valid @RequestBody CreateCategoriaDTO dto) {
+    Categoria categoria = CategoriaMapper.createDtoToCategoria(dto);
     categoria = categoriaService.add(categoria);
     return new ResponseEntity<BaseResponse>(BaseResponse.success(categoria), HttpStatus.CREATED);
 
   }
+
+  /*********************** EDITAR CATEGORIA ****************************/
 
   @Operation(summary = "Actualizar categoria")
   @PutMapping("/{idCategoria}")
@@ -66,6 +80,8 @@ public class CategoriaController {
     Categoria newCategoria = categoriaService.edit(idCategoria, categoria);
     return new ResponseEntity<BaseResponse>(BaseResponse.success(newCategoria), HttpStatus.OK);
   }
+
+    /*********************** ELIMINAR CATEGORIA ****************************/
 
   @Operation(summary = "Eliminar logicamente una categoria")
   @PatchMapping("/{idCategoria}")

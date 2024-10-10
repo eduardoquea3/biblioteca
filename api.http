@@ -1,15 +1,13 @@
 @URL=http://localhost:8080
 
-### Autores
-
-//paginacion y ordenamiento
+###
 GET {{URL}}/autores?page=0&size=5 HTTP/1.1
+
 ###
 GET {{URL}}/autores?page=0&size=5&sortBy=idAutor  HTTP/1.1
 
 ###
-
-GET {{URL}}/autores HTTP/1.1
+GET {{URL}}/autores?page=0&size=100  HTTP/1.1
 
 ###
 POST {{URL}}/autores HTTP/1.1
@@ -20,7 +18,7 @@ content-type: application/json
 }
 
 ###
-PUT {{URL}}/autores/26 HTTP/1.1
+PUT {{URL}}/autores/1 HTTP/1.1
 content-type: application/json
 
 {
@@ -28,17 +26,15 @@ content-type: application/json
 }
 
 ###
-PATCH {{URL}}/autores/26
+PATCH {{URL}}/autores/1
 
-
-
-//paginacion y ordenamiento
 ###
 GET {{URL}}/categorias?page=0&size=10 HTTP/1.1
+
 ###
 GET {{URL}}/categorias?page=0&size=5&sortBy=nombre  HTTP/1.1
 
-### Categorias
+###
 GET {{URL}}/categorias HTTP/1.1
 
 ###
@@ -60,17 +56,14 @@ content-type: application/json
 ###
 PATCH {{URL}}/categorias/11
 
-### Idiomas
-
-//paginacion y ordenamiento
 ###
 GET {{URL}}/idiomas?page=0&size=5 HTTP/1.1
+
 ###
 GET {{URL}}/idiomas?page=0&size=5&sortBy=nombre HTTP/1.1
 
-
-
-GET {{URL}}/idiomas HTTP/1.1
+###
+GET {{URL}}/idiomas?sortBy=idIdioma
 
 ###
 POST {{URL}}/idiomas HTTP/1.1
@@ -91,23 +84,22 @@ content-type: application/json
 ###
 PATCH {{URL}}/idiomas/3
 
-### Subgeneros
-
-//paginacion y ordenamiento
 ###
-GET {{URL}}/subgeneros?page=0&size=5 HTTP/1.1
+GET {{URL}}/subgeneros?page=0&size=5
+
+
 ###
-GET {{URL}}/subgeneros?page=0&size=5&sortBy=idSubgenero&sortBy=nombre  HTTP/1.1
+GET {{URL}}/subgeneros?sortBy=idSubgenero HTTP/1.1
 
-
-GET {{URL}}/subgeneros HTTP/1.1
+###
+GET {{URL}}/subgeneros HTTP/1.0
 
 ###
 POST {{URL}}/subgeneros HTTP/1.1
 content-type: application/json
 
 {
-  "nombre": "prueba"
+  "nombre": "prueba 10"
 }
 
 ###
@@ -119,16 +111,14 @@ content-type: application/json
 }
 
 ###
-PATCH {{URL}}/subgeneros/12
+PATCH {{URL}}/subgeneros/24
 
-### Editoriales
-
-//paginacion y ordenamiento
 ###
 GET {{URL}}/editoriales?page=0&size=5 HTTP/1.1
 ###
 GET {{URL}}/editoriales?page=0&size=5&sortBy=nombre  HTTP/1.1
 
+###
 GET {{URL}}/editoriales HTTP/1.1
 
 ###
@@ -150,12 +140,14 @@ content-type: application/json
 ###
 PATCH {{URL}}/editoriales/11
 
-### Libros
+###
 GET {{URL}}/libros?page=0&size=5 HTTP/1.1
+
 ###
-GET {{URL}}/libros HTTP/1.1
+GET {{URL}}/libros
+
 ###
-GET {{URL}}/libros?page=0&size=5&sortBy=nombre  HTTP/1.1
+GET {{URL}}/libros?page=0&size=5&sortBy=kojlh
 
 
 
@@ -163,31 +155,15 @@ GET {{URL}}/libros?page=0&size=5&sortBy=nombre  HTTP/1.1
 GET {{URL}}/libros/3 HTTP/1.1
 
 ###
-POST {{URL}}/libros HTTP/1.1
+POST {{URL}}/libros
 content-type: application/json
 
 {
   "serialNumber": "CN004",
-  "nombre": "Cien años de soledad",
-  "autor": {
-    "idAutor": 1
-  },
-  "idioma": {
-    "idIdioma": 1
-  },
-  "editorial": {
-    "idEditorial": 2
-  },
-  "categoria": {
-    "idCategoria": 2
-  },
-  "subGenero": {
-    "idSubgenero": 2
-  },
-  "anio": 1967,
-  "unidades": 100,
-  "cantidadPaginas": 471,
-  "urlImagen": "https://example.com/cien-anos-de-soledad.jpg"
+  "idAutor": 1,
+  "idEditorial": 1,
+  "idSubgenero": 1,
+  "idCategoria": 1
 }
 
 ###
@@ -220,9 +196,9 @@ content-type: application/json
 
 ###
 PATCH {{URL}}/libros/28
+
 ###
 GET {{URL}}/libros/3
-
 
 ###
 GET {{URL}}/clientes HTTP/1.1
@@ -236,12 +212,12 @@ content-type: application/json
 
 {
   "dni": "71558974",
-  "nombre": "Nelson",   
-  "apellido": "Arango",  
+  "nombre": "Nelson",
+  "apellido": "Arango",
   "telefono": "965812458",
   "correo": "NelsonArango@gmail.com",
   "direccion": "av.Arquipa",
-  "fecha": "2000-01-20"  
+  "fecha": "2000-01-20"
 }
 
 ###
@@ -250,12 +226,12 @@ content-type: application/json
 
 {
   "dni": "20214545",
-  "nombre": "Juan Carlos",   
-  "apellido": "Garcia",  
+  "nombre": "Juan Carlos",
+  "apellido": "Garcia",
   "telefono": "965874458",
   "correo": "JuanGarcia14@gmail.com",
   "direccion": "av.los Heroes",
-  "fecha": "1999-01-12"  
+  "fecha": "1999-01-12"
 }
 ###
 PATCH {{URL}}/clientes/8
@@ -264,10 +240,9 @@ PATCH {{URL}}/clientes/8
 GET {{URL}}/prestamos HTTP/1.1
 
 ###
-GET {{URL}}/prestamos?page=0&size=5&sortBy=idprestamo HTTP/1.1
+GET {{URL}}/prestamos?page=0&size=5&sortBy=idPrestamo HTTP/1.1
 
 ###
-
 POST {{URL}}/prestamos HTTP/1.1
 content-type: application/json
 
@@ -294,3 +269,6 @@ content-type: application/json
   "fechaDevolucion": "2024-10-25"
 
 }
+
+###
+GET {{URL}}/estadoprestamo HTTP/1.0

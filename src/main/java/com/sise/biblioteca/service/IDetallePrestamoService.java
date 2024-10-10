@@ -1,23 +1,19 @@
 package com.sise.biblioteca.service;
-import org.springframework.data.domain.Pageable;
 
 import com.sise.biblioteca.entities.DetallePrestamo;
 import com.sise.biblioteca.errors.ClientException;
-
-
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface IDetallePrestamoService {
-      
-      Page<DetallePrestamo> getAll(Pageable pageable);
 
-      DetallePrestamo getById(Integer idDetalleprestamo) throws ClientException;
+  Page<DetallePrestamo> getAll(Pageable pageable);
 
-      DetallePrestamo add(DetallePrestamo detallePrestamo);
+  DetallePrestamo getById(Integer idDetalleprestamo) throws ClientException;
 
-      DetallePrestamo edit(Integer id, DetallePrestamo detallePrestamo) throws ClientException;
+  DetallePrestamo add(DetallePrestamo detallePrestamo);
 
-      void remove(Integer idDetalleprestamo) throws ClientException;
-      
+  DetallePrestamo edit(Integer id, DetallePrestamo detallePrestamo) throws ClientException;
 
+  void remove(Integer idDetalleprestamo) throws ClientException;
 }

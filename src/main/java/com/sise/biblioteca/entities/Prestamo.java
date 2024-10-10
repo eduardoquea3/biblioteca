@@ -20,28 +20,27 @@ import lombok.Data;
 @Entity
 @Table(name = "prestamos")
 public class Prestamo {
-      
-      @Id
-      @Column(name = "idprestamo",insertable = false,updatable = false)
-      @GeneratedValue(strategy =GenerationType.IDENTITY )
-      private Integer idPrestamo;
 
-      @OneToOne
-      @JoinColumn(name = "idcliente",nullable = false)
-      private Cliente cliente;
-      
+  @Id
+  @Column(name = "idprestamo", insertable = false, updatable = false)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer idPrestamo;
 
-      @Column(name="cantidad")
-      private Integer cantidad;
-      
-      @Column(name="fechaprestamo")
-      private Date fechaPrestamo;
+  @OneToOne
+  @JoinColumn(name = "idcliente", nullable = false)
+  private Cliente cliente;
 
-      @Column(name="fechadevolucion")
-      private Date fechaDevolucion;
-     
-      @Column(name = "estadoauditoria",insertable = false,updatable = false)
-      @JsonIgnore
-      private boolean estado;
+  @Column(name = "cantidad")
+  private Integer cantidad;
+
+  @Column(name = "fechaprestamo")
+  private Date fechaPrestamo;
+
+  @Column(name = "fechadevolucion")
+  private Date fechaDevolucion;
+
+  @Column(name = "estadoauditoria", insertable = false, updatable = false)
+  @JsonIgnore
+  private boolean estado;
 
 }

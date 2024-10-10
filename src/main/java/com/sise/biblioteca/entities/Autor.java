@@ -19,8 +19,11 @@ public class Autor {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer idAutor;
 
- // @Column(name = "nombre")
+  @Column(name = "nombre")
   private String nombre;
+
+  @Column(name = "nacionalidad")
+  private String nacionalidad;
 
   @Column(name = "estadoauditoria", insertable = false, updatable = false)
   @JsonIgnore

@@ -28,8 +28,11 @@ public class Cliente {
   @Column(name = "nombres")
   private String nombre;
 
-  @Column(name = "apellidos")
-  private String apellido;
+  @Column(name = "apellidopaterno")
+  private String apellidoPaterno;
+
+  @Column(name = "apellidomaterno")
+  private String apellidoMaterno;
 
   @Column(name = "telefono")
   private String Telefono;

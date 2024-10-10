@@ -1,5 +1,15 @@
 package com.sise.biblioteca.controllers;
 
+import com.sise.biblioteca.dto.EstadoPrestamo.CreateEstadoPrestamoDTO;
+import com.sise.biblioteca.dto.EstadoPrestamo.UpdateEstadoPrestamoDTO;
+import com.sise.biblioteca.entities.EstadoPrestamo;
+import com.sise.biblioteca.errors.ClientException;
+import com.sise.biblioteca.mappers.EstadoPrestamoMapper;
+import com.sise.biblioteca.service.IEstadoPrestamoService;
+import com.sise.biblioteca.shared.BaseResponse;
+import com.sise.biblioteca.shared.ValidateSort;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,15 +28,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.sise.biblioteca.entities.EstadoPrestamo;
-import com.sise.biblioteca.errors.ClientException;
-import com.sise.biblioteca.service.IEstadoPrestamoService;
-import com.sise.biblioteca.shared.BaseResponse;
-import com.sise.biblioteca.shared.ValidateSort;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/estadoprestamo")
@@ -56,7 +57,9 @@ class EstadoPrestamoController {
   @Operation(summary = "Agregar estado de prestamo")
   @PostMapping("")
   public ResponseEntity<BaseResponse> addEstadoPrestamo(
-      @RequestBody EstadoPrestamo estadoPrestamo) {
+      @RequestBody CreateEstadoPrestamoDTO estadoPrestamoDTO) {
+    EstadoPrestamo estadoPrestamo =
+        EstadoPrestamoMapper.createDtoToEstadoPrestamo(estadoPrestamoDTO);
     estadoPrestamo = estadoPrestamoService.add(estadoPrestamo);
     return new ResponseEntity<>(BaseResponse.success(estadoPrestamo), HttpStatus.CREATED);
   }
@@ -64,8 +67,11 @@ class EstadoPrestamoController {
   @Operation(summary = "Actualizar estado de prestamo")
   @PutMapping("/{idEstadoPrestamo}")
   public ResponseEntity<BaseResponse> editEstadoPrestamo(
-      @PathVariable Integer idEstadoPrestamo, @RequestBody EstadoPrestamo estadoPrestamo)
+      @PathVariable Integer idEstadoPrestamo,
+      @RequestBody UpdateEstadoPrestamoDTO estadoPrestamoDTO)
       throws ClientException {
+    EstadoPrestamo estadoPrestamo =
+        EstadoPrestamoMapper.updateDtoToEstadoPrestamo(estadoPrestamoDTO);
     estadoPrestamo = estadoPrestamoService.edit(idEstadoPrestamo, estadoPrestamo);
     return new ResponseEntity<>(BaseResponse.success(estadoPrestamo), HttpStatus.OK);
   }

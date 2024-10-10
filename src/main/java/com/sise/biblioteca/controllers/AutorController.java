@@ -1,5 +1,16 @@
 package com.sise.biblioteca.controllers;
 
+import com.sise.biblioteca.dto.Autor.CreateAutorDTO;
+import com.sise.biblioteca.dto.Autor.UpdateAutorDTO;
+import com.sise.biblioteca.entities.Autor;
+import com.sise.biblioteca.errors.ClientException;
+import com.sise.biblioteca.mappers.AutorMapper;
+import com.sise.biblioteca.service.IAutorService;
+import com.sise.biblioteca.shared.BaseResponse;
+import com.sise.biblioteca.shared.ValidateSort;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,38 +30,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.sise.biblioteca.dto.Autor.CreateAutorDTO;
-import com.sise.biblioteca.entities.Autor;
-import com.sise.biblioteca.errors.ClientException;
-import com.sise.biblioteca.mappers.AutorMapper;
-import com.sise.biblioteca.service.IAutorService;
-import com.sise.biblioteca.shared.BaseResponse;
-import com.sise.biblioteca.shared.ValidateSort;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
-
 @RestController
 @RequestMapping("/autores")
 @Tag(name = "Autores")
 @EnableSpringDataWebSupport(pageSerializationMode = PageSerializationMode.VIA_DTO)
 public class AutorController {
 
-  @Autowired
-  private IAutorService autorService;
+  @Autowired private IAutorService autorService;
 
   @Operation(summary = "Obtener todos los autores")
   @GetMapping("")
   public ResponseEntity<BaseResponse> listarAutores(
       @RequestParam(defaultValue = "0") int page,
-
       @RequestParam(defaultValue = "5") int size,
-
-      @RequestParam(required = false) String[] sortBy) throws ClientException {
+      @RequestParam(required = false) String[] sortBy)
+      throws ClientException {
 
     Sort sort = Sort.unsorted();
-    if (sortBy != null){
+    if (sortBy != null) {
       ValidateSort.Validate(sortBy, Autor.class);
       sort = sort.and(Sort.by(sortBy));
     }
@@ -71,15 +68,17 @@ public class AutorController {
 
   @Operation(summary = "Actualizar autor")
   @PutMapping("/{idAutor}")
-  public ResponseEntity<BaseResponse> editAutor(@PathVariable Integer idAutor, @RequestBody Autor autor)
-      throws ClientException {
+  public ResponseEntity<BaseResponse> editAutor(
+      @PathVariable Integer idAutor, @RequestBody UpdateAutorDTO autorDTO) throws ClientException {
+    Autor autor = AutorMapper.updateDtoToAutor(autorDTO);
     Autor newAutor = autorService.edit(idAutor, autor);
     return new ResponseEntity<BaseResponse>(BaseResponse.success(newAutor), HttpStatus.OK);
   }
 
   @Operation(summary = "Eliminar logicamente un autor")
   @PatchMapping("/{idAutor}")
-  public ResponseEntity<BaseResponse> removeAutor(@PathVariable Integer idAutor) throws ClientException {
+  public ResponseEntity<BaseResponse> removeAutor(@PathVariable Integer idAutor)
+      throws ClientException {
     autorService.remove(idAutor);
     return new ResponseEntity<BaseResponse>(BaseResponse.success(), HttpStatus.NO_CONTENT);
   }

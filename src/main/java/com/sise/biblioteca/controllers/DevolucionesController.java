@@ -1,5 +1,15 @@
 package com.sise.biblioteca.controllers;
 
+import com.sise.biblioteca.dto.Devolucion.CreateDevolucionDTO;
+import com.sise.biblioteca.dto.Devolucion.UpdateDevolucionDTO;
+import com.sise.biblioteca.entities.Devolucion;
+import com.sise.biblioteca.errors.ClientException;
+import com.sise.biblioteca.mappers.DevolucionesMapper;
+import com.sise.biblioteca.service.IDevolucionService;
+import com.sise.biblioteca.shared.BaseResponse;
+import com.sise.biblioteca.shared.ValidateSort;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,15 +28,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.sise.biblioteca.entities.Devolucion;
-import com.sise.biblioteca.errors.ClientException;
-import com.sise.biblioteca.service.IDevolucionService;
-import com.sise.biblioteca.shared.BaseResponse;
-import com.sise.biblioteca.shared.ValidateSort;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/devoluciones")
@@ -57,7 +58,9 @@ public class DevolucionesController {
 
   @Operation(summary = "Agregar devolucion")
   @PostMapping("")
-  public ResponseEntity<BaseResponse> addDevolucion(@RequestBody Devolucion devolucion) {
+  public ResponseEntity<BaseResponse> addDevolucion(
+      @RequestBody CreateDevolucionDTO devolucionDTO) {
+    Devolucion devolucion = DevolucionesMapper.createDtoToDevolucion(devolucionDTO);
     devolucion = devolucionService.add(devolucion);
     return new ResponseEntity<>(BaseResponse.success(devolucion), HttpStatus.CREATED);
   }
@@ -65,8 +68,9 @@ public class DevolucionesController {
   @Operation(summary = "Actualizar devolucion")
   @PutMapping("/{idDevolucion}")
   public ResponseEntity<BaseResponse> editDevolucion(
-      @PathVariable Integer idDevolucion, @RequestBody Devolucion devolucion)
+      @PathVariable Integer idDevolucion, @RequestBody UpdateDevolucionDTO devolucionDTO)
       throws ClientException {
+    Devolucion devolucion = DevolucionesMapper.updateDtoToDevolucion(devolucionDTO);
     Devolucion newDevolucion = devolucionService.edit(idDevolucion, devolucion);
     return new ResponseEntity<>(BaseResponse.success(newDevolucion), HttpStatus.OK);
   }

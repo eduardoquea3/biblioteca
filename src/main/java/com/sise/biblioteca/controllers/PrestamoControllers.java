@@ -1,5 +1,15 @@
 package com.sise.biblioteca.controllers;
 
+import com.sise.biblioteca.dto.Prestamo.CreatePrestamoDTO;
+import com.sise.biblioteca.dto.Prestamo.UpdatePrestamoDTO;
+import com.sise.biblioteca.entities.Prestamo;
+import com.sise.biblioteca.errors.ClientException;
+import com.sise.biblioteca.mappers.PrestamoMapper;
+import com.sise.biblioteca.service.IPrestamoService;
+import com.sise.biblioteca.shared.BaseResponse;
+import com.sise.biblioteca.shared.ValidateSort;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,15 +28,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.sise.biblioteca.entities.Prestamo;
-import com.sise.biblioteca.errors.ClientException;
-import com.sise.biblioteca.service.IPrestamoService;
-import com.sise.biblioteca.shared.BaseResponse;
-import com.sise.biblioteca.shared.ValidateSort;
-
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/prestamos")
@@ -65,7 +66,8 @@ public class PrestamoControllers {
 
   @Operation(summary = "Agregar un Prestamo")
   @PostMapping("")
-  public ResponseEntity<BaseResponse> add(@RequestBody Prestamo prestamo) {
+  public ResponseEntity<BaseResponse> add(@RequestBody CreatePrestamoDTO prestamoDTO) {
+    Prestamo prestamo = PrestamoMapper.createDtoToPrestamo(prestamoDTO);
     prestamo = prestamoService.add(prestamo);
     return new ResponseEntity<BaseResponse>(BaseResponse.success(prestamo), HttpStatus.CREATED);
   }
@@ -73,7 +75,9 @@ public class PrestamoControllers {
   @Operation(summary = "Actualizar el Prestamo")
   @PutMapping("/{idPrestamo}")
   public ResponseEntity<BaseResponse> edit(
-      @PathVariable Integer idPrestamo, @RequestBody Prestamo prestamo) throws ClientException {
+      @PathVariable Integer idPrestamo, @RequestBody UpdatePrestamoDTO prestamoDTO)
+      throws ClientException {
+    Prestamo prestamo = PrestamoMapper.updateDtoToPrestamo(prestamoDTO);
     Prestamo newPrestamo = prestamoService.edit(idPrestamo, prestamo);
     return new ResponseEntity<BaseResponse>(BaseResponse.success(newPrestamo), HttpStatus.OK);
   }

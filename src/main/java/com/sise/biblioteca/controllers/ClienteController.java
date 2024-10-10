@@ -1,7 +1,10 @@
 package com.sise.biblioteca.controllers;
 
+import com.sise.biblioteca.dto.Cliente.CreateClienteDTO;
+import com.sise.biblioteca.dto.Cliente.UpdateClienteDTO;
 import com.sise.biblioteca.entities.Cliente;
 import com.sise.biblioteca.errors.ClientException;
+import com.sise.biblioteca.mappers.ClienteMapper;
 import com.sise.biblioteca.service.IClienteService;
 import com.sise.biblioteca.shared.BaseResponse;
 import com.sise.biblioteca.shared.ValidateSort;
@@ -39,7 +42,8 @@ public class ClienteController {
   public ResponseEntity<BaseResponse> listarClientes(
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "5") int size,
-      @RequestParam(required = false) String[] sortBy) throws ClientException {
+      @RequestParam(required = false) String[] sortBy)
+      throws ClientException {
     Sort sort = Sort.unsorted();
     if (sortBy != null) {
       ValidateSort.Validate(sortBy, Cliente.class);
@@ -62,8 +66,8 @@ public class ClienteController {
 
   @Operation(summary = "Agregar un Cliente")
   @PostMapping("")
-  public ResponseEntity<BaseResponse> add(@RequestBody Cliente cliente) {
-
+  public ResponseEntity<BaseResponse> add(@RequestBody CreateClienteDTO clienteDTO) {
+    Cliente cliente = ClienteMapper.createDtoToCliente(clienteDTO);
     cliente = clienteService.add(cliente);
     return new ResponseEntity<BaseResponse>(BaseResponse.success(cliente), HttpStatus.CREATED);
   }
@@ -71,7 +75,9 @@ public class ClienteController {
   @Operation(summary = "Actualizar el Cliente")
   @PutMapping("/{idCliente}")
   public ResponseEntity<BaseResponse> edit(
-      @PathVariable Integer idCliente, @RequestBody Cliente cliente) throws ClientException {
+      @PathVariable Integer idCliente, @RequestBody UpdateClienteDTO clienteDTO)
+      throws ClientException {
+    Cliente cliente = ClienteMapper.updateDtoToCliente(clienteDTO);
     Cliente newCliente = clienteService.edit(idCliente, cliente);
     return new ResponseEntity<BaseResponse>(BaseResponse.success(newCliente), HttpStatus.OK);
   }

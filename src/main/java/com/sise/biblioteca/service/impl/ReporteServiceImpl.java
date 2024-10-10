@@ -10,6 +10,7 @@ import com.sise.biblioteca.payload.request.ReporteMaestroRequest;
 import com.sise.biblioteca.payload.request.ReporteTablaRequest;
 import com.sise.biblioteca.service.IReporteService;
 import com.itextpdf.html2pdf.HtmlConverter;
+import com.sise.biblioteca.shared.constants;
 
 @Service
 public class ReporteServiceImpl implements IReporteService {
@@ -42,6 +43,9 @@ public class ReporteServiceImpl implements IReporteService {
     private String buildHeaderPdf() {
         return new StringBuilder()
             .append("<div class=\"header-pdf\">")
+            .append("<div class=\"img\">")
+            .append("<img src=\"data:image/png;base64, " + constants.LOGO_B64 + "\"></img>")
+            .append("</div>")
             .append("<h1>Biblioteca</h1>")
             .append("<p>Av. Libertador 1234, Miraflores, Lima, Perú</p>")
             .append("</div>")
@@ -128,6 +132,10 @@ public class ReporteServiceImpl implements IReporteService {
             .append("text-align: center;")  // Centrar el encabezado
             .append("padding: 10px;")
             .append("}")
+            .append(".img {")
+            .append("text-align: left;")
+            .append("}")
+
             .append(".header-pdf h1 {")
             .append("font-size: 2rem;")
             .append("margin-bottom: 0.5rem;")

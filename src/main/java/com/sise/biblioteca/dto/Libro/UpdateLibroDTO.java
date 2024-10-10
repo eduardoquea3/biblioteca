@@ -9,13 +9,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class CreateLibroDTO {
-  /* ESTO QUEDA MUCHO A DISPOSICION DE COMO ESTARÁN LAS RESTRICCIONES DE LA BD,
-  SI ALGUN CAMPO NO PUEDE SER NULL SEGUN LA BD, QUE COLOQUE EL @NOTBLANK ENCIMA*/
-
-  @NotBlank(message = "El número de serie es obligatorio.")
-  private String serialNumber;
-
+public class UpdateLibroDTO {
   @NotBlank(message = "El nombre es obligatorio.")
   @Size(max = 100, message = "El nombre no puede exceder los 100 caracteres.")
   private String nombre;

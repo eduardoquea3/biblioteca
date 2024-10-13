@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sise.biblioteca.payload.request.ReporteMaestroRequest;
 import com.sise.biblioteca.service.IReporteService;
-
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.MediaType;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/reporte")
+@Tag(name = "Reportes", description = "Controlador de reportes")
 public class ReporteController {
-      
+
    @Autowired
    IReporteService reporteService;
-   
+
 
 @PostMapping("/maestro")
    public ResponseEntity<byte[]> reporteMaestro(@RequestBody ReporteMaestroRequest reporteMaestroRequest) {
@@ -36,7 +37,5 @@ public class ReporteController {
             return new ResponseEntity<byte[]>((new byte[]{}), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-          
-   }
-   
 
+   }

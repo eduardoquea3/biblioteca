@@ -3,6 +3,7 @@ package com.sise.biblioteca.controllers;
 import com.sise.biblioteca.payload.request.EmailRequest;
 import com.sise.biblioteca.service.IEmailService;
 import com.sise.biblioteca.shared.BaseResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/email")
+@Tag(name = "Email", description = "Controlador de email")
 public class EmailController {
 
   @Autowired private IEmailService emailService;
